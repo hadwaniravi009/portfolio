@@ -31,7 +31,7 @@ function rh_portfolio_setup() {
 }
 add_action( 'after_setup_theme', 'rh_portfolio_setup' );
 
-// 3. Register Custom Post Type: Portfolio Projects
+// 3. Register Custom Post Type: Portfolio Projects & Meta
 function rh_register_project_cpt() {
     $labels = array(
         'name'               => 'Projects',
@@ -44,6 +44,10 @@ function rh_register_project_cpt() {
     $args = array(
         'labels'             => $labels,
         'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
         'has_archive'        => true,
         'show_in_rest'       => true, // Enable REST API
         'rest_base'          => 'portfolio_project',
@@ -52,10 +56,16 @@ function rh_register_project_cpt() {
     );
 
     register_post_type( 'portfolio_project', $args );
+
+    // Register Meta Fields for REST API
+    register_post_meta( 'portfolio_project', 'category', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
+    register_post_meta( 'portfolio_project', 'tags', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
+    register_post_meta( 'portfolio_project', 'live_url', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
+    register_post_meta( 'portfolio_project', 'github_url', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
 }
 add_action( 'init', 'rh_register_project_cpt' );
 
-// 4. Register Custom Post Type: Services
+// 4. Register Custom Post Type: Services & Meta
 function rh_register_service_cpt() {
     $labels = array(
         'name'               => 'Services',
@@ -66,6 +76,9 @@ function rh_register_service_cpt() {
     $args = array(
         'labels'             => $labels,
         'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
         'show_in_rest'       => true,
         'rest_base'          => 'portfolio_service',
         'supports'           => array( 'title', 'editor', 'custom-fields' ),
@@ -73,10 +86,13 @@ function rh_register_service_cpt() {
     );
 
     register_post_type( 'portfolio_service', $args );
+
+    register_post_meta( 'portfolio_service', 'icon', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
+    register_post_meta( 'portfolio_service', 'tags', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
 }
 add_action( 'init', 'rh_register_service_cpt' );
 
-// 5. Register Custom Post Type: Testimonials
+// 5. Register Custom Post Type: Testimonials & Meta
 function rh_register_testimonial_cpt() {
     $labels = array(
         'name'               => 'Testimonials',
@@ -86,6 +102,9 @@ function rh_register_testimonial_cpt() {
     $args = array(
         'labels'             => $labels,
         'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
         'show_in_rest'       => true,
         'rest_base'          => 'portfolio_testimonial',
         'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
@@ -93,6 +112,9 @@ function rh_register_testimonial_cpt() {
     );
 
     register_post_type( 'portfolio_testimonial', $args );
+
+    register_post_meta( 'portfolio_testimonial', 'role', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
+    register_post_meta( 'portfolio_testimonial', 'company', array( 'show_in_rest' => true, 'single' => true, 'type' => 'string' ) );
 }
 add_action( 'init', 'rh_register_testimonial_cpt' );
 
