@@ -226,6 +226,17 @@ const FALLBACK_BLOG_POSTS: BlogPost[] = [
   },
 ];
 
+function getCleanWpUrl(): string {
+  let url = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  url = url.trim();
+  url = url.replace(/\/+$/, '');
+  url = url.replace(/\/wp-admin$/, '').replace(/\/wp-json$/, '');
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  return url;
+}
+
 async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 8000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
@@ -250,7 +261,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
 }
 
 export async function getProjects(): Promise<Project[]> {
-  const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  const wpUrl = getCleanWpUrl();
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_project?_embed`, {
@@ -279,7 +290,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getServices(): Promise<Service[]> {
-  const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  const wpUrl = getCleanWpUrl();
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service`, {
@@ -304,7 +315,7 @@ export async function getServices(): Promise<Service[]> {
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
-  const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  const wpUrl = getCleanWpUrl();
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_testimonial?_embed`, {
@@ -329,7 +340,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  const wpUrl = getCleanWpUrl();
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/posts?_embed`, {
@@ -358,7 +369,6 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   }
 }
 
-
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await getBlogPosts();
   const found = posts.find((p) => p.slug === slug);
@@ -372,14 +382,14 @@ export async function sendContactMessage(payload: {
   projectType: string;
   message: string;
 }) {
-  const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  const wpUrl = getCleanWpUrl();
   if (wpUrl) {
     try {
       const res = await fetchWithTimeout(`${wpUrl}/wp-json/rh-portfolio/v1/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-      }, 5000);
+      }, 8000);
       if (res.ok) return await res.json();
     } catch (e) {
       console.warn('WP contact endpoint fallback:', e);
@@ -394,4 +404,5 @@ export async function sendContactMessage(payload: {
   });
   return await res.json();
 }
+
 
