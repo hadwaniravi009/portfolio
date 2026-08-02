@@ -6,7 +6,8 @@ import Footer from '@/components/Footer';
 import NewsletterForm from '@/components/NewsletterForm';
 import { ArrowRight, ArrowUpRight, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();

@@ -11,7 +11,8 @@ import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
-export const revalidate = 60; // Revalidate every 60s for WordPress API sync
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function HomePage() {
   const [projects, services, testimonials] = await Promise.all([
