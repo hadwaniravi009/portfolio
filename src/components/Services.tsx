@@ -78,23 +78,39 @@ export default function Services({ services }: ServicesProps) {
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0051d5]/10 border border-[#0051d5]/20 text-[#0051d5] text-xs font-bold uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0051d5]/10 border border-[#0051d5]/20 text-[#0051d5] text-xs font-extrabold uppercase tracking-widest mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Tailored Digital Engineering</span>
+              <span>Bespoke Engineering & Design Capabilities</span>
             </div>
-            <h2 className="text-3xl md:text-6xl font-black tracking-tight text-[#000000] leading-none">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#000000] leading-none mb-4">
               Services & Capabilities.
             </h2>
-            <p className="text-[#444748] mt-3 text-base max-w-2xl leading-relaxed font-medium">
-              Upload custom icons directly via WordPress Admin (Featured Image or Meta Field). Managed 100% dynamically in real-time.
+            <p className="text-[#444748] text-base md:text-lg max-w-2xl leading-relaxed font-medium">
+              Transforming complex business requirements into fast, scalable, and conversion-optimized digital products with Swiss layout precision.
             </p>
+
+            {/* Micro Feature Metric Chips */}
+            <div className="flex flex-wrap items-center gap-4 mt-6">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-2xs">
+                <Zap className="w-4 h-4 text-amber-500" />
+                <span>Sub-1.2s Speed Target</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-2xs">
+                <Shield className="w-4 h-4 text-emerald-500" />
+                <span>Decoupled Headless WP</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-2xs">
+                <Layout className="w-4 h-4 text-[#0051d5]" />
+                <span>100% Mobile Ready</span>
+              </div>
+            </div>
           </div>
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#0051d5] text-white px-7 py-4 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all shadow-xl hover:shadow-2xl active:scale-95 group cursor-pointer shrink-0"
+            className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#0051d5] text-white px-8 py-4 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all shadow-xl hover:shadow-2xl active:scale-95 group cursor-pointer shrink-0"
           >
-            <span>Book a Technical Consultation</span>
+            <span>Book a Consultation</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
