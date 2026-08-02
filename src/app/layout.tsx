@@ -19,14 +19,14 @@ export const metadata: Metadata = {
     'Next.js Portfolio',
     'WordPress Developer',
     'Headless WordPress',
-    'Web Developer London',
+    'Web Developer India',
   ],
-  authors: [{ name: 'Ravi Hadwani', url: 'https://ravihadwani.com' }],
+  authors: [{ name: 'Ravi Hadwani', url: 'https://hadwaniravi.vercel.app' }],
   openGraph: {
     title: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
     description: 'Transforming ideas into fast, responsive, SEO-friendly web experiences.',
     type: 'website',
-    url: 'https://ravihadwani.com',
+    url: 'https://hadwaniravi.vercel.app',
   },
 };
 

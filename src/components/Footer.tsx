@@ -24,13 +24,10 @@ export default function Footer() {
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               LinkedIn
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="https://github.com/hadwaniravi009" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               GitHub
             </a>
-            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              Behance
-            </a>
-            <a href="mailto:hello@ravihadwani.com" className="hover:text-white transition-colors">
+            <a href="mailto:hadwaniravi009@gmail.com" className="hover:text-white transition-colors">
               Email
             </a>
           </div>

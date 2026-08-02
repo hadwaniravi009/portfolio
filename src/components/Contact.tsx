@@ -62,8 +62,8 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-xs uppercase font-bold tracking-widest text-gray-400">Direct Email</p>
-                <a href="mailto:hello@ravihadwani.com" className="text-lg font-bold text-[#000000] hover:text-[#0051d5] transition-colors">
-                  hello@ravihadwani.com
+                <a href="mailto:hadwaniravi009@gmail.com" className="text-lg font-bold text-[#000000] hover:text-[#0051d5] transition-colors">
+                  hadwaniravi009@gmail.com
                 </a>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-xs uppercase font-bold tracking-widest text-gray-400">Location</p>
-                <p className="text-lg font-bold text-[#000000]">London, United Kingdom</p>
+                <p className="text-lg font-bold text-[#000000]">India</p>
               </div>
             </div>
           </div>
