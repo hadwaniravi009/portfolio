@@ -38,29 +38,31 @@
   background-size: 40px 40px;
 }
 
-/* Custom Cursor */
-#custom-cursor {
-  width: 20px;
-  height: 20px;
-  background-color: rgba(0, 0, 0, 0.85);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.3s ease;
-  mix-blend-mode: difference;
+/* Creative Dual Magnetic Cursor Styling */
+.cursor-hover.w-9 {
+  width: 56px !important;
+  height: 56px !important;
+  border-color: #0051d5 !important;
+  background-color: rgba(0, 81, 213, 0.1) !important;
+  box-shadow: 0 0 24px rgba(0, 81, 213, 0.35);
 }
 
-#custom-cursor.active {
-  transform: scale(3.5);
-  background-color: rgba(255, 255, 255, 0.95);
+.cursor-hover.w-2\.5 {
+  background-color: #316bf3 !important;
+  box-shadow: 0 0 16px #316bf3 !important;
+}
+
+.cursor-click.w-9 {
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%) scale(0.85) !important;
 }
 
 @media (pointer: coarse) {
-  #custom-cursor {
-    display: none;
+  #custom-cursor,
+  .pointer-events-none.fixed.inset-0.z-\[99999\] {
+    display: none !important;
   }
 }
+
 
 /* Ambient Canvas Shader */
 canvas#ambient-shader {
