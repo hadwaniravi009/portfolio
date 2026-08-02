@@ -118,7 +118,28 @@ function rh_register_testimonial_cpt() {
 }
 add_action( 'init', 'rh_register_testimonial_cpt' );
 
-// 6. Custom REST API Contact Route
+// 6. Register Custom Post Type: Client Inquiries (Form Submissions Database Storage)
+function rh_register_inquiry_cpt() {
+    $labels = array(
+        'name'               => 'Inquiries',
+        'singular_name'      => 'Inquiry',
+        'all_items'          => 'Client Inquiries',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'menu_icon'          => 'dashicons-email-alt',
+        'supports'           => array( 'title', 'editor', 'custom-fields' ),
+    );
+
+    register_post_type( 'portfolio_inquiry', $args );
+}
+add_action( 'init', 'rh_register_inquiry_cpt' );
+
+// 7. Custom REST API Contact Route
 add_action( 'rest_api_init', function () {
     register_rest_route( 'rh-portfolio/v1', '/contact', array(
         'methods'  => 'POST',
@@ -139,12 +160,26 @@ function rh_handle_contact_submission( WP_REST_Request $request ) {
         return new WP_Error( 'missing_fields', 'Name, email, and message are required.', array( 'status' => 400 ) );
     }
 
+    // 1. Save Inquiry inside WordPress Admin Database
+    wp_insert_post( array(
+        'post_type'    => 'portfolio_inquiry',
+        'post_title'   => "Inquiry from $name ($type)",
+        'post_content' => "Client Name: $name\nEmail: $email\nProject Type: $type\n\nMessage:\n$message",
+        'post_status'  => 'publish',
+        'meta_input'   => array(
+            'client_name'  => $name,
+            'client_email' => $email,
+            'project_type' => $type,
+        ),
+    ) );
+
+    // 2. Dispatch Email to Admin
     $to      = get_option( 'admin_email' );
     $subject = "New Portfolio Inquiry from $name ($type)";
     $body    = "Name: $name\nEmail: $email\nProject Type: $type\n\nMessage:\n$message";
     $headers = array( 'Content-Type: text/plain; charset=UTF-8', "Reply-To: $name <$email>" );
 
-    $sent = wp_mail( $to, $subject, $body, $headers );
+    @wp_mail( $to, $subject, $body, $headers );
 
     return rest_ensure_response( array(
         'success' => true,
