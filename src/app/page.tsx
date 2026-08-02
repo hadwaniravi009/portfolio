@@ -1,5 +1,6 @@
 import { getProjects, getServices, getTestimonials } from '@/lib/wordpress';
 import CustomCursor from '@/components/CustomCursor';
+import ScrollProgress from '@/components/ScrollProgress';
 import AmbientShader from '@/components/AmbientShader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -24,8 +25,10 @@ export default async function HomePage() {
   return (
     <main className="relative min-h-screen selection:bg-[#0051d5] selection:text-white overflow-x-hidden">
       <CustomCursor />
+      <ScrollProgress />
       <AmbientShader />
       <Navbar />
+
       <Hero />
       <About />
       <Services services={services} />

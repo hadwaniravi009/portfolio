@@ -102,3 +102,37 @@ canvas#ambient-shader {
 .group:hover .project-card-image {
   transform: scale(1.04) translateY(-4px);
 }
+
+/* ==========================================
+   Creative Custom Scrollbar Styling
+   ========================================== */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(248, 249, 251, 0.6);
+  backdrop-filter: blur(12px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0051d5 0%, #002c77 100%);
+  border-radius: 9999px;
+  border: 2px solid #f8f9fb;
+  box-shadow: 0 0 10px rgba(0, 81, 213, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #316bf3 0%, #0051d5 100%);
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 16px rgba(0, 81, 213, 0.9);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0051d5 #f8f9fb;
+}
+
