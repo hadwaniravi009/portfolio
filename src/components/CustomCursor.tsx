@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const dotWrapperRef = useRef<HTMLDivElement>(null);
+  const ringWrapperRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -15,27 +15,27 @@ export default function CustomCursor() {
 
   useEffect(() => {
     if (!mounted) return;
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const dotWrapper = dotWrapperRef.current;
+    const ringWrapper = ringWrapperRef.current;
+    if (!dotWrapper || !ringWrapper) return;
 
     let mouseX = -100;
     let mouseY = -100;
     let ringX = -100;
     let ringY = -100;
-    const lerpSpeed = 0.2;
+    const lerpSpeed = 0.22;
     let animId: number;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      dotWrapper.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     };
 
     const animateRing = () => {
       ringX += (mouseX - ringX) * lerpSpeed;
       ringY += (mouseY - ringY) * lerpSpeed;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      ringWrapper.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
       animId = requestAnimationFrame(animateRing);
     };
 
@@ -73,24 +73,35 @@ export default function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden">
-      {/* Outer Magnetic Follower Ring */}
+      {/* Outer Magnetic Ring Position Wrapper (NO CSS TRANSITIONS!) */}
       <div
-        ref={ringRef}
-        className={`fixed top-0 left-0 rounded-full border-[1.5px] border-[#0051d5]/60 bg-[#0051d5]/5 pointer-events-none transition-all duration-200 ease-out will-change-transform ${
-          isHovered
-            ? 'w-14 h-14 border-[#0051d5] bg-[#0051d5]/15 shadow-[0_0_24px_rgba(0,81,213,0.4)]'
-            : 'w-9 h-9'
-        } ${isClicked ? 'scale-75' : 'scale-100'}`}
-        style={{ transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
-      />
-      {/* Inner Glowing Center Dot */}
+        ref={ringWrapperRef}
+        className="fixed top-0 left-0 pointer-events-none will-change-transform"
+        style={{ transform: 'translate3d(-100px, -100px, 0)' }}
+      >
+        {/* Inner Ring Visual (CSS transitions for size/hover/click only) */}
+        <div
+          className={`-translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[#0051d5]/60 bg-[#0051d5]/5 pointer-events-none transition-all duration-200 ease-out ${
+            isHovered
+              ? 'w-14 h-14 border-[#0051d5] bg-[#0051d5]/15 shadow-[0_0_24px_rgba(0,81,213,0.4)]'
+              : 'w-9 h-9'
+          } ${isClicked ? 'scale-75' : 'scale-100'}`}
+        />
+      </div>
+
+      {/* Inner Dot Position Wrapper (NO CSS TRANSITIONS!) */}
       <div
-        ref={dotRef}
-        className={`fixed top-0 left-0 rounded-full bg-[#0051d5] shadow-[0_0_10px_#0051d5] pointer-events-none transition-all duration-150 ease-out will-change-transform ${
-          isHovered ? 'w-3 h-3 bg-[#316bf3] shadow-[0_0_16px_#316bf3]' : 'w-2.5 h-2.5'
-        } ${isClicked ? 'scale-50' : 'scale-100'}`}
-        style={{ transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
-      />
+        ref={dotWrapperRef}
+        className="fixed top-0 left-0 pointer-events-none will-change-transform"
+        style={{ transform: 'translate3d(-100px, -100px, 0)' }}
+      >
+        {/* Inner Dot Visual */}
+        <div
+          className={`-translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0051d5] shadow-[0_0_10px_#0051d5] pointer-events-none transition-all duration-150 ease-out ${
+            isHovered ? 'w-3 h-3 bg-[#316bf3] shadow-[0_0_16px_#316bf3]' : 'w-2.5 h-2.5'
+          } ${isClicked ? 'scale-50' : 'scale-100'}`}
+        />
+      </div>
     </div>
   );
 }
