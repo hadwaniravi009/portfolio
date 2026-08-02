@@ -20,6 +20,19 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      const targetId = href.replace('/#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        e.preventDefault();
+        window.history.pushState(null, '', `/#${targetId}`);
+        element.scrollIntoView({ behavior: 'smooth' });
+        setMobileMenuOpen(false);
+      }
+    }
+  };
+
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Projects', href: '/#projects' },
@@ -52,6 +65,7 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="text-xs font-semibold uppercase tracking-widest text-[#444748] hover:text-[#000000] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-[#000000] hover:after:w-full after:transition-all"
             >
               {item.label}
@@ -63,6 +77,7 @@ export default function Navbar() {
         <div className="hidden sm:flex items-center gap-4">
           <Link
             href="/#contact"
+            onClick={(e) => handleNavClick(e, '/#contact')}
             className="bg-[#000000] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all active:scale-95 shadow-md hover:shadow-lg flex items-center gap-1 group"
           >
             <span>Let's Build Together</span>
@@ -91,7 +106,7 @@ export default function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="text-sm font-bold uppercase tracking-widest text-[#191c1e] hover:text-[#0051d5] py-2 border-b border-gray-100"
               >
                 {item.label}
@@ -99,7 +114,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/#contact"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, '/#contact')}
               className="mt-2 bg-[#000000] text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all"
             >
               Let's Build Together
