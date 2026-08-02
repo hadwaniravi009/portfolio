@@ -260,11 +260,29 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
+function parseTags(rawTags: any, fallback: string[] = []): string[] {
+  if (!rawTags) return fallback;
+  if (Array.isArray(rawTags)) return rawTags.length > 0 ? rawTags : fallback;
+  if (typeof rawTags === 'string') {
+    const trimmed = rawTags.trim();
+    if (!trimmed) return fallback;
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      return [trimmed];
+    } catch {
+      const parts = trimmed.split(',').map((t) => t.trim()).filter(Boolean);
+      return parts.length > 0 ? parts : fallback;
+    }
+  }
+  return fallback;
+}
+
 export async function getProjects(): Promise<Project[]> {
   const wpUrl = getCleanWpUrl();
 
   try {
-    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_project?_embed`, {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_project?_embed&per_page=100`, {
       cache: 'no-store',
     }, 8000);
     if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
@@ -276,10 +294,10 @@ export async function getProjects(): Promise<Project[]> {
       id: item.id,
       title: item.title.rendered,
       category: item.meta?.category || 'WordPress',
-      tags: item.meta?.tags ? (typeof item.meta.tags === 'string' ? JSON.parse(item.meta.tags) : item.meta.tags) : ['WordPress', 'React'],
+      tags: parseTags(item.meta?.tags, ['WordPress', 'React']),
       image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_PROJECTS[0].image,
-      challenge: item.excerpt?.rendered?.replace(/<[^>]+>/g, '') || 'Project built with custom architecture.',
-      solution: item.content?.rendered?.replace(/<[^>]+>/g, '') || '',
+      challenge: item.excerpt?.rendered?.replace(/<[^>]+>/g, '').trim() || 'Project built with custom architecture.',
+      solution: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || '',
       liveUrl: item.meta?.live_url || '#',
       githubUrl: item.meta?.github_url || '#',
     }));
@@ -293,7 +311,7 @@ export async function getServices(): Promise<Service[]> {
   const wpUrl = getCleanWpUrl();
 
   try {
-    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service`, {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service?per_page=100`, {
       cache: 'no-store',
     }, 8000);
     if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
@@ -305,8 +323,8 @@ export async function getServices(): Promise<Service[]> {
       id: item.id,
       icon: item.meta?.icon || 'code',
       title: item.title.rendered,
-      description: item.content?.rendered?.replace(/<[^>]+>/g, '') || '',
-      tags: item.meta?.tags ? (typeof item.meta.tags === 'string' ? JSON.parse(item.meta.tags) : item.meta.tags) : [],
+      description: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || 'High-performance tailored solution engineered with modern web technologies.',
+      tags: parseTags(item.meta?.tags, ['Design', 'Development', 'API']),
     }));
   } catch (error) {
     console.error('Error fetching WP services:', error);
@@ -314,11 +332,12 @@ export async function getServices(): Promise<Service[]> {
   }
 }
 
+
 export async function getTestimonials(): Promise<Testimonial[]> {
   const wpUrl = getCleanWpUrl();
 
   try {
-    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_testimonial?_embed`, {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_testimonial?_embed&per_page=100`, {
       cache: 'no-store',
     }, 8000);
     if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
@@ -343,7 +362,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   const wpUrl = getCleanWpUrl();
 
   try {
-    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/posts?_embed`, {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/posts?_embed&per_page=100`, {
       cache: 'no-store',
     }, 8000);
     if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
@@ -368,6 +387,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     return FALLBACK_BLOG_POSTS;
   }
 }
+
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await getBlogPosts();
