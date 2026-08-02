@@ -50,17 +50,17 @@ export default function Navbar() {
           : 'bg-[#f8f9fb]/80 backdrop-blur-md py-5 border-b border-[#c4c7c7]/20'
       }`}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="font-bold text-xl md:text-2xl tracking-tighter text-[#000000] group-hover:text-[#0051d5] transition-colors">
+        <Link href="/" className="flex items-center gap-2 group" onClick={() => setMobileMenuOpen(false)}>
+          <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-tighter text-[#000000] group-hover:text-[#0051d5] transition-colors">
             Ravi Hadwani
           </span>
           <span className="w-2 h-2 rounded-full bg-[#0051d5] inline-block animate-pulse"></span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-10">
+        <div className="hidden lg:flex items-center gap-8 xl:gap-10">
           {navItems.map((item) => (
             <Link
               key={item.label}
@@ -78,7 +78,7 @@ export default function Navbar() {
           <Link
             href="/#contact"
             onClick={(e) => handleNavClick(e, '/#contact')}
-            className="bg-[#000000] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all active:scale-95 shadow-md hover:shadow-lg flex items-center gap-1 group"
+            className="bg-[#000000] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all active:scale-95 shadow-md hover:shadow-lg flex items-center gap-1 group"
           >
             <span>Let's Build Together</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -89,7 +89,7 @@ export default function Navbar() {
         <div className="flex lg:hidden items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#000000] focus:outline-none"
+            className="p-2 text-[#000000] focus:outline-none hover:text-[#0051d5] transition-colors"
             aria-label="Toggle Navigation Menu"
             suppressHydrationWarning
           >
@@ -100,22 +100,29 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white/95 backdrop-blur-2xl border-b border-[#c4c7c7]/30 px-6 py-6 transition-all animate-fade-in-up">
-          <div className="flex flex-col gap-4">
+        <div className="lg:hidden bg-white/95 backdrop-blur-2xl border-b border-[#c4c7c7]/30 px-6 py-6 transition-all shadow-xl max-h-[calc(100vh-70px)] overflow-y-auto">
+          <div className="flex flex-col gap-3">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="text-sm font-bold uppercase tracking-widest text-[#191c1e] hover:text-[#0051d5] py-2 border-b border-gray-100"
+                onClick={(e) => {
+                  handleNavClick(e, item.href);
+                  setMobileMenuOpen(false);
+                }}
+                className="text-sm font-bold uppercase tracking-widest text-[#191c1e] hover:text-[#0051d5] py-2.5 border-b border-gray-100 flex items-center justify-between"
               >
-                {item.label}
+                <span>{item.label}</span>
+                <ArrowUpRight className="w-4 h-4 text-gray-400" />
               </Link>
             ))}
             <Link
               href="/#contact"
-              onClick={(e) => handleNavClick(e, '/#contact')}
-              className="mt-2 bg-[#000000] text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all"
+              onClick={(e) => {
+                handleNavClick(e, '/#contact');
+                setMobileMenuOpen(false);
+              }}
+              className="mt-3 bg-[#000000] text-white text-center py-3.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all shadow-md active:scale-95"
             >
               Let's Build Together
             </Link>
