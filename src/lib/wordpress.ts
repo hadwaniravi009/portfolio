@@ -311,7 +311,7 @@ export async function getServices(): Promise<Service[]> {
   const wpUrl = getCleanWpUrl();
 
   try {
-    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service?per_page=100`, {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service?_embed&per_page=100`, {
       cache: 'no-store',
     }, 8000);
     if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
@@ -321,7 +321,7 @@ export async function getServices(): Promise<Service[]> {
 
     return data.map((item: any) => ({
       id: item.id,
-      icon: item.meta?.icon || 'code',
+      icon: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || item.meta?.icon || 'code',
       title: item.title.rendered,
       description: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || 'High-performance tailored solution engineered with modern web technologies.',
       tags: parseTags(item.meta?.tags, ['Design', 'Development', 'API']),
