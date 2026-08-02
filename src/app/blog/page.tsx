@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getBlogPosts } from '@/lib/wordpress';
 import CustomCursor from '@/components/CustomCursor';
-import FloatingDock from '@/components/FloatingDock';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import NewsletterForm from '@/components/NewsletterForm';
@@ -18,9 +17,7 @@ export default async function BlogPage() {
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#e2e2e2] selection:bg-[#0051d5] selection:text-white overflow-x-hidden">
       <CustomCursor />
-      <FloatingDock />
       <Navbar />
-
 
       {/* Ambient Glow Orbs */}
       <div className="fixed top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-[#14213D] rounded-full blur-[140px] opacity-25 pointer-events-none z-0"></div>
