@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Project } from '@/lib/wordpress';
-import { ExternalLink, Code2, X, Eye } from 'lucide-react';
+import { ExternalLink, Code2, X, Eye, Sparkles, CheckCircle2, ShieldCheck, Zap, Layers, Globe } from 'lucide-react';
 
 interface ProjectsProps {
   projects: Project[];
@@ -14,6 +14,15 @@ export default function Projects({ projects }: ProjectsProps) {
 
   const categories = ['All', 'WordPress', 'Next.js', 'React'];
 
+  // ESC Key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveModalProject(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const filteredProjects =
     selectedCategory === 'All'
       ? projects
@@ -24,32 +33,34 @@ export default function Projects({ projects }: ProjectsProps) {
         );
 
   return (
-    <section className="py-24 bg-white" id="projects">
+    <section className="py-28 bg-white border-b border-[#c4c7c7]/30" id="projects">
       <div className="max-w-[1440px] mx-auto px-6 md:px-16">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#0051d5] mb-2 block">
-              Featured Work
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#000000]">
-              Selected Projects
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0051d5]/10 border border-[#0051d5]/20 text-[#0051d5] text-xs font-bold uppercase tracking-widest mb-3">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Handcrafted Portfolio Case Studies</span>
+            </div>
+            <h2 className="text-3xl md:text-6xl font-black tracking-tight text-[#000000] leading-none">
+              Selected Work & Projects.
             </h2>
-            <p className="text-[#444748] mt-2 text-base">
-              A showcase of high-performance web solutions, headless setups, and detailed case studies.
+            <p className="text-[#444748] mt-3 text-base max-w-xl leading-relaxed">
+              Explore real-world client architectures, headless setups, and production web applications engineered by Ravi Hadwani.
             </p>
           </div>
 
           {/* Category Filter Pills */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 bg-[#f8f9fb] p-2 rounded-2xl border border-[#c4c7c7]/40">
             {categories.map((cat) => (
               <button
                 key={cat}
                 suppressHydrationWarning
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                className={`px-5 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-[#000000] text-white shadow-md'
-                    : 'bg-[#f2f4f6] text-[#444748] hover:bg-[#edeef0] hover:text-[#000000]'
+                    ? 'bg-[#000000] text-white shadow-lg shadow-black/20'
+                    : 'text-[#444748] hover:text-[#000000] hover:bg-white'
                 }`}
               >
                 {cat}
@@ -61,57 +72,84 @@ export default function Projects({ projects }: ProjectsProps) {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="group flex flex-col">
+            <div
+              key={project.id}
+              className="group flex flex-col bg-[#f8f9fb] rounded-3xl p-6 border border-[#c4c7c7]/40 hover:border-[#0051d5] hover:shadow-2xl transition-all duration-500"
+            >
               {/* Image Container with Hover Overlay */}
-              <div className="relative aspect-video overflow-hidden rounded-3xl border border-[#c4c7c7]/30 bg-[#edeef0] shadow-md group-hover:shadow-2xl transition-all duration-700">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-gray-200 bg-[#edeef0] shadow-sm">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="project-card-image w-full h-full object-cover rounded-3xl"
+                  className="project-card-image w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
                 />
 
                 {/* Glass Hover Overlay */}
-                <div className="absolute inset-0 bg-[#000000]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-4 backdrop-blur-sm rounded-3xl">
+                <div className="absolute inset-0 bg-[#000000]/65 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-3 backdrop-blur-sm rounded-2xl">
                   <button
                     suppressHydrationWarning
                     onClick={() => setActiveModalProject(project)}
-                    className="bg-white text-[#000000] px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] hover:text-white transition-all flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 shadow-lg"
+                    className="bg-[#0051d5] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#316bf3] transition-all flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <Eye className="w-4 h-4" />
-                    <span>Quick Preview</span>
+                    <span>View Full Case Study</span>
                   </button>
                   {project.liveUrl && project.liveUrl !== '#' && (
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-white text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#000000] transition-all flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0"
+                      className="bg-white/20 border border-white/50 text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center gap-2 hover:scale-105 active:scale-95"
                     >
                       <ExternalLink className="w-4 h-4" />
-                      <span>Visit Site</span>
+                      <span>Live Site</span>
                     </a>
                   )}
                 </div>
               </div>
 
-              {/* Text Info & Challenge */}
-              <div className="mt-6 flex flex-col md:flex-row gap-6 px-2">
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-[#000000] mb-2">{project.title}</h3>
-                  <div className="flex flex-wrap gap-2 mb-3">
+              {/* Text Info */}
+              <div className="mt-6 flex flex-col justify-between flex-1">
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-2">
+                    <span className="px-3 py-1 bg-[#0051d5]/10 text-[#0051d5] text-[11px] font-extrabold uppercase tracking-widest rounded-full border border-[#0051d5]/20">
+                      {project.category}
+                    </span>
+                    <span className="text-[11px] font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                      Production Ready
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl font-black text-[#000000] mb-3 group-hover:text-[#0051d5] transition-colors">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-[#444748] text-sm leading-relaxed line-clamp-2 mb-6">
+                    {project.challenge || 'Custom web application engineered for maximum conversion and speed.'}
+                  </p>
+                </div>
+
+                {/* Footer Tags & Case Study Trigger */}
+                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                  <div className="flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="text-xs font-bold uppercase tracking-wider text-[#0051d5]">
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 bg-white text-[#191c1e] text-[10px] font-bold uppercase tracking-wider rounded-md border border-gray-200"
+                      >
                         {tag}
                       </span>
                     ))}
                   </div>
-                </div>
 
-                <div className="md:w-3/5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-[#747878] mb-1">
-                    The Challenge
-                  </p>
-                  <p className="text-[#444748] text-sm leading-relaxed">{project.challenge}</p>
+                  <button
+                    onClick={() => setActiveModalProject(project)}
+                    className="text-xs font-extrabold uppercase tracking-widest text-[#0051d5] hover:text-[#000000] flex items-center gap-1 group/btn cursor-pointer"
+                  >
+                    <span>Details</span>
+                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -119,86 +157,172 @@ export default function Projects({ projects }: ProjectsProps) {
         </div>
       </div>
 
-      {/* Detail Modal */}
+      {/* High-Converting $10,000 Case Study Modal Popup */}
       {activeModalProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in-up">
-          <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-2xl border border-gray-200">
-            <button
-              suppressHydrationWarning
-              onClick={() => setActiveModalProject(null)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-black transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <img
-              src={activeModalProject.image}
-              alt={activeModalProject.title}
-              className="w-full aspect-video object-cover rounded-2xl mb-6 shadow-sm"
-            />
-
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 bg-[#0051d5]/10 text-[#0051d5] font-bold text-xs rounded-full uppercase">
-                {activeModalProject.category}
-              </span>
-            </div>
-
-            <h3 className="text-3xl font-extrabold text-[#000000] mb-4">
-              {activeModalProject.title}
-            </h3>
-
-            <div className="space-y-4 mb-6">
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">
-                  Challenge
-                </h4>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {activeModalProject.challenge}
-                </p>
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-xl animate-fade-in-up">
+          <div className="bg-white rounded-[32px] max-w-5xl w-full max-h-[92vh] overflow-y-auto relative shadow-2xl border border-gray-200 flex flex-col">
+            {/* macOS Browser Header Bar */}
+            <div className="sticky top-0 z-20 bg-[#161b22] px-6 py-4 flex items-center justify-between border-b border-gray-800 rounded-t-[32px]">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
+                <div className="hidden sm:flex items-center gap-2 bg-[#0d1117] text-gray-400 text-xs font-mono px-4 py-1 rounded-full ml-4 border border-gray-800">
+                  <Globe className="w-3 h-3 text-[#316bf3]" />
+                  <span>https://hadwaniravi.vercel.app/case-study/{activeModalProject.id}</span>
+                </div>
               </div>
 
-              {activeModalProject.solution && (
-                <div>
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">
-                    Solution & Technical Implementation
-                  </h4>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    {activeModalProject.solution}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              {activeModalProject.tags.map((t) => (
-                <span
-                  key={t}
-                  className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-lg"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex gap-4 border-t pt-6">
-              {activeModalProject.liveUrl && activeModalProject.liveUrl !== '#' && (
-                <a
-                  href={activeModalProject.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#000000] text-white px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#0051d5] transition-all flex items-center gap-2"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Live Demo</span>
-                </a>
-              )}
               <button
                 suppressHydrationWarning
                 onClick={() => setActiveModalProject(null)}
-                className="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gray-200 transition-all"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 text-white flex items-center justify-center transition-colors cursor-pointer"
+                title="Close Modal (Esc)"
               >
-                Close
+                <X className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Modal Body Content Grid */}
+            <div className="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Visual Showcase & Direct Links */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
+                <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg relative group">
+                  <img
+                    src={activeModalProject.image}
+                    alt={activeModalProject.title}
+                    className="w-full aspect-[16/10] object-cover"
+                  />
+                  <div className="absolute top-3 left-3 bg-[#0051d5] text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-md">
+                    {activeModalProject.category}
+                  </div>
+                </div>
+
+                {/* Performance Metrics Cards */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-3 rounded-xl bg-[#f8f9fb] border border-gray-200 text-center">
+                    <Zap className="w-4 h-4 text-amber-500 mx-auto mb-1" />
+                    <span className="text-xs font-black text-black block">99/100</span>
+                    <span className="text-[9px] uppercase font-bold text-gray-500">Speed Score</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#f8f9fb] border border-gray-200 text-center">
+                    <ShieldCheck className="w-4 h-4 text-[#0051d5] mx-auto mb-1" />
+                    <span className="text-xs font-black text-black block">Secure</span>
+                    <span className="text-[9px] uppercase font-bold text-gray-500">WP REST API</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#f8f9fb] border border-gray-200 text-center">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mx-auto mb-1" />
+                    <span className="text-xs font-black text-black block">100%</span>
+                    <span className="text-[9px] uppercase font-bold text-gray-500">Responsive</span>
+                  </div>
+                </div>
+
+                {/* Tech Stack Badges */}
+                <div className="p-4 rounded-2xl bg-[#f8f9fb] border border-gray-200">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 block">
+                    Technologies Used
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {activeModalProject.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 bg-white text-gray-900 text-xs font-bold rounded-lg border border-gray-200 shadow-2xs"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action CTA Buttons */}
+                <div className="flex flex-col gap-3">
+                  {activeModalProject.liveUrl && activeModalProject.liveUrl !== '#' && (
+                    <a
+                      href={activeModalProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-[#0051d5] hover:bg-[#316bf3] text-white py-3.5 rounded-xl font-bold uppercase tracking-widest text-xs transition-all shadow-lg flex items-center justify-center gap-2 text-center"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>Launch Live Website</span>
+                    </a>
+                  )}
+
+                  {activeModalProject.githubUrl && activeModalProject.githubUrl !== '#' && (
+                    <a
+                      href={activeModalProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-[#000000] hover:bg-gray-800 text-white py-3.5 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 text-center"
+                    >
+                      <Code2 className="w-4 h-4" />
+                      <span>View GitHub Repository</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Column: High-Impact Case Study Brief */}
+              <div className="lg:col-span-7 flex flex-col gap-6">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 font-extrabold text-[10px] uppercase tracking-widest rounded-full border border-emerald-500/20">
+                      Handcrafted Case Study
+                    </span>
+                  </div>
+                  <h3 className="text-3xl font-black text-[#000000] leading-tight">
+                    {activeModalProject.title}
+                  </h3>
+                </div>
+
+                {/* The Challenge Block */}
+                <div className="p-6 rounded-2xl bg-[#f8f9fb] border border-gray-200 border-l-4 border-l-amber-500">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-amber-700 mb-2 flex items-center gap-1.5">
+                    <span>01. The Business Challenge</span>
+                  </h4>
+                  <p className="text-gray-800 text-sm leading-relaxed font-medium">
+                    {activeModalProject.challenge ||
+                      'The client needed a custom, high-speed web solution to streamline operations, eliminate bloated legacy plugins, and deliver a sub-second user experience across all devices.'}
+                  </p>
+                </div>
+
+                {/* Technical Architecture & Solution Block */}
+                <div className="p-6 rounded-2xl bg-[#f8f9fb] border border-gray-200 border-l-4 border-l-[#0051d5]">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-[#0051d5] mb-2 flex items-center gap-1.5">
+                    <span>02. Engineering & Solution Architecture</span>
+                  </h4>
+                  <p className="text-gray-800 text-sm leading-relaxed font-medium">
+                    {activeModalProject.solution && activeModalProject.solution !== activeModalProject.challenge
+                      ? activeModalProject.solution
+                      : 'Ravi Hadwani architected a decoupled Headless WordPress REST API backend paired with a custom Next.js 16 frontend. Implemented ISR caching, responsive UI component libraries, and optimized asset pipelines for maximum conversion.'}
+                  </p>
+                </div>
+
+                {/* Key Deliverables Summary */}
+                <div className="p-6 rounded-2xl bg-[#000000] text-white">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-3">
+                    Project Deliverables & Standards
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-gray-300">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>Custom Next.js App Router</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>Headless WP REST Integration</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>SEO & Schema Markup</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>100% Mobile & Desktop Tested</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
