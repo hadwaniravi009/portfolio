@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Architecting Scalable Design Systems | Ravi Hadwani</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#534433",
+                        "on-primary-fixed-variant": "#653e00",
+                        "on-secondary-container": "#abb8db",
+                        "on-tertiary-container": "#474747",
+                        "on-primary-fixed": "#2a1700",
+                        "on-secondary-fixed": "#0d1b36",
+                        "surface-dim": "#121414",
+                        "secondary-fixed-dim": "#b9c6ea",
+                        "primary-fixed-dim": "#ffb95f",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-tint": "#ffb95f",
+                        "surface-container-lowest": "#0d0f0f",
+                        "tertiary-container": "#b6b6b6",
+                        "on-secondary-fixed-variant": "#3a4664",
+                        "outline": "#a18e79",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#855300",
+                        "secondary-fixed": "#d9e2ff",
+                        "primary": "#ffc887",
+                        "on-tertiary": "#303030",
+                        "on-secondary": "#23304d",
+                        "surface": "#121414",
+                        "primary-fixed": "#ffddb8",
+                        "surface-container-high": "#282a2b",
+                        "background": "#121414",
+                        "tertiary": "#d2d2d2",
+                        "surface-container-highest": "#333535",
+                        "surface-bright": "#38393a",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-primary": "#472a00",
+                        "surface-container": "#1e2020",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-surface": "#e2e2e2",
+                        "surface-variant": "#333535",
+                        "on-surface-variant": "#d9c3ad",
+                        "on-error": "#690005",
+                        "on-background": "#e2e2e2",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "primary-container": "#fca311",
+                        "secondary": "#b9c6ea",
+                        "inverse-on-surface": "#2f3131",
+                        "on-primary-container": "#663f00",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary-container": "#3c4967"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Sora"],
+                        "display-lg": ["Sora"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "headline-lg": ["Sora"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(20, 33, 61, 0.4);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .amber-glow:hover {
+            box-shadow: 0 0 20px rgba(252, 163, 17, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::selection {
+            background-color: #fca311;
+            color: #000000;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation -->
+<nav class="bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-white/10 docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary cursor-pointer active:scale-95 transition-transform">
+            Ravi Hadwani
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">WORK</a>
+<a class="text-primary font-bold transition-colors duration-300 font-label-sm text-label-sm" href="#">WRITING</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">LABS</a>
+<span class="material-symbols-outlined text-primary cursor-pointer">contact_mail</span>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</nav>
+<!-- Animated Shader Background Container (Simulated via overlay) -->
+<div class="fixed inset-0 pointer-events-none z-0">
+
+</div>
+<main class="relative z-10">
+<!-- Hero Section -->
+<header class="relative w-full h-[618px] flex flex-col justify-end items-start px-margin-mobile md:px-margin-desktop pb-12 overflow-hidden">
+<!-- Hero Image Background -->
+<div class="absolute inset-0 -z-10">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
+<div class="w-full h-full" data-alt="A cinematic, high-contrast overhead shot of a complex circuit board with glowing amber pathways and deep midnight blue shadows. The aesthetic is clean, technical, and premium, representing advanced software architecture. Soft, ethereal light glimmers off the metallic components against a pure black void, creating a professional and futuristic atmosphere suitable for an enterprise engineering blog." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8bJTSnm-poepvx9mUm5Ku5oU33EcQjz73U08x0cip2V7B8LraW6BCzblgbFRN5kJNmgKWZtn44pXU1C9h55F33E19lIsHEkHPcuJLsamPMj5yWPHGtmcPBXfI2AEY6iWKI3MftavaJiYi6TmQC08YJBm7NCLvONTVRFafEzXu2zrqzw_qI-WTwdC98NVoPXYB9KRNX567-weGLDGc2-WC8fkJPrOJQhNbHH5y_HTqqesHu5pUHtASzw')"></div>
+</div>
+<div class="max-w-4xl space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+<span class="inline-block px-3 py-1 bg-primary-container text-on-primary-container font-label-sm text-label-sm rounded-full">
+                    Design Strategy
+                </span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-white max-w-5xl">
+                    Architecting Scalable Design Systems for Enterprise React Applications
+                </h1>
+<div class="flex items-center gap-4 text-on-surface-variant pt-4">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full border border-primary/30 bg-secondary-container" data-alt="A professional headshot of Ravi Hadwani, a design engineer with a thoughtful expression. The portrait is captured in low-key lighting with a dark navy background, highlighting his features with a soft amber key light. He wears a minimalist black turtleneck, embodying a modern, sophisticated, and creative tech professional persona." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCxnZPl9JRqtH_W-RrRRLdN3x3nqUhgQkCvG2EHDAkvNdAtYkdJz1hovfJ00wrBByPhaSCOcKIjkgq3oNX_vgSSE5QxkmeeixcVsWRbZ3C-sftAp6cLsuUy8ZE57RcWEl-ulBxMNUsYXTmIKABk1IO9-H0HbQ-lLF6VaZQQvMGJ64apAOrU8bjJI5NF5PTxCwSH9lCfuvQb-VgF5tXN-oqL6iGpAx6fQqMiJhbs4KS6DnBSTysCaiyVKA')"></div>
+<span class="font-body-md text-body-md text-primary">Ravi Hadwani</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-body-md text-body-md">October 24, 2024</span>
+</div>
+</div>
+</header>
+<!-- Article Content -->
+<article class="px-margin-mobile md:px-margin-desktop py-20 max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Floating Sidebar (Desktop) -->
+<aside class="hidden lg:block lg:col-span-3">
+<div class="sticky top-32 space-y-12">
+<div>
+<p class="font-label-sm text-label-sm text-primary mb-4">TABLE OF CONTENTS</p>
+<ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li class="hover:text-primary transition-colors cursor-pointer text-primary font-bold">Introduction</li>
+<li class="hover:text-primary transition-colors cursor-pointer">The Component Myth</li>
+<li class="hover:text-primary transition-colors cursor-pointer">React Architecture</li>
+<li class="hover:text-primary transition-colors cursor-pointer">Scalability Patterns</li>
+</ul>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-primary mb-4">SHARE</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 flex items-center justify-center rounded-lg glass-card text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-lg glass-card text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">link</span>
+</a>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Body -->
+<div class="lg:col-span-9 max-w-3xl glass-card rounded-xl p-8 md:p-16 shadow-2xl relative overflow-hidden">
+<!-- Subtle glow effect -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 blur-[100px] rounded-full"></div>
+<div class="prose prose-invert prose-amber max-w-none space-y-10">
+<p class="font-body-lg text-body-lg text-on-surface/90 leading-relaxed first-letter:text-5xl first-letter:font-bold first-letter:text-primary first-letter:mr-3 first-letter:float-left">
+                            In the rapidly evolving landscape of enterprise software, the gap between design vision and technical implementation often widens as teams scale. A design system isn't merely a library of buttons and inputs; it's the operational infrastructure of your product's user experience. To build one that survives the rigors of an enterprise environment, we must approach it with the same engineering discipline we apply to our back-end services.
+                        </p>
+<h2 class="font-headline-lg text-headline-lg text-white border-l-4 border-primary pl-6 py-2">The Architecture of Communication</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Enterprise React applications face unique challenges: legacy migrations, micro-frontends, and highly specialized user workflows. Standard "Atomic Design" often fails here because it doesn't account for the complexity of business logic or the high-density data requirements typical of B2B platforms.
+                        </p>
+<!-- Pull Quote -->
+<blockquote class="relative py-12 px-8 my-12 border-y border-white/10 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary text-6xl opacity-30 absolute -top-4 left-1/2 -translate-x-1/2" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-headline-md text-headline-md text-white italic relative z-10">
+                                "Design systems are not just about components; they are about communication."
+                            </p>
+</blockquote>
+<h3 class="font-headline-md text-headline-md text-white">Compound Components &amp; Logic Hoisting</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            One of the most effective patterns we've implemented is the Compound Component pattern. By utilizing React's Context API within a component family, we allow developers to compose complex UI without prop-drilling or exposing internal state logic. This maintains a clean API for the consumer while ensuring visual consistency across the entire ecosystem.
+                        </p>
+<!-- Code Sample Simulation (Visual Only) -->
+<div class="bg-surface-container-low rounded-xl p-6 font-label-sm text-label-sm border border-white/5 overflow-x-auto">
+<pre class="text-on-primary-fixed-variant"><span class="text-primary">const</span> <span class="text-secondary">DataTable</span> = ({ children }) =&gt; {
+  <span class="text-on-surface-variant">// Internal orchestration logic here</span>
+  <span class="text-primary">return</span> (
+    &lt;<span class="text-secondary">Provider</span> value={tableState}&gt;
+      &lt;<span class="text-secondary">Container</span>&gt;{children}&lt;/<span class="text-secondary">Container</span>&gt;
+    &lt;/<span class="text-secondary">Provider</span>&gt;
+  );
+};</pre>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Ultimately, the success of a design system is measured by its adoption. If it's too rigid, developers will bypass it. If it's too flexible, the design integrity dissolves. Finding that 'Goldilocks zone' of flexibility is the true engineering challenge of modern design systems.
+                        </p>
+</div>
+<!-- Post Footer Sharing -->
+<div class="mt-20 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">SHARE THIS INSIGHT</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center transition-transform hover:scale-110 active:scale-95">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-[#1da1f2]/20 text-[#1da1f2] border border-[#1da1f2]/30 flex items-center justify-center transition-transform hover:scale-110 active:scale-95">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-[#0077b5]/20 text-[#0077b5] border border-[#0077b5]/30 flex items-center justify-center transition-transform hover:scale-110 active:scale-95">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm">SAVE TO READING LIST</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Next Article / Recommendation -->
+<section class="bg-surface-container-lowest py-24 px-margin-mobile md:px-margin-desktop border-t border-white/5">
+<div class="max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-12">
+<div>
+<p class="font-label-sm text-label-sm text-primary mb-2">CONTINUE READING</p>
+<h2 class="font-headline-lg text-headline-lg text-white">Recommended for you</h2>
+</div>
+<a class="hidden md:flex items-center gap-2 text-primary font-label-sm text-label-sm group" href="#">
+                        VIEW ALL POSTS
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Next Article Card -->
+<div class="group relative glass-card p-8 rounded-xl cursor-pointer transition-all hover:bg-white/5 amber-glow overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-6xl">insights</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary mb-4 block">Product Engineering</span>
+<h3 class="font-headline-md text-headline-md text-white mb-4 group-hover:text-primary transition-colors">Performance Optimization in Next.js 14</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Exploring the nuances of Server Components and partial pre-rendering for ultra-fast enterprise apps.</p>
+<div class="mt-8 flex items-center gap-2 font-label-sm text-label-sm text-primary">
+                            READ ARTICLE <span class="material-symbols-outlined text-sm">north_east</span>
+</div>
+</div>
+<div class="group relative glass-card p-8 rounded-xl cursor-pointer transition-all hover:bg-white/5 amber-glow overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+<span class="material-symbols-outlined text-6xl">brush</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary mb-4 block">UI/UX Design</span>
+<h3 class="font-headline-md text-headline-md text-white mb-4 group-hover:text-primary transition-colors">The Psychology of Dark Mode Interfaces</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">How high-contrast visuals impact user focus and perceived luxury in digital products.</p>
+<div class="mt-8 flex items-center gap-2 font-label-sm text-label-sm text-primary">
+                            READ ARTICLE <span class="material-symbols-outlined text-sm">north_east</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-dim dark:bg-surface-dim border-t border-white/10 flex flex-col md:flex-row justify-between items-center w-full py-20 px-margin-mobile md:px-margin-desktop gap-base relative z-20">
+<div class="flex flex-col gap-4 items-center md:items-start">
+<div class="font-headline-md text-headline-md text-primary font-bold tracking-tighter">Ravi Hadwani</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs text-center md:text-left">
+                © 2024 Ravi Hadwani. Crafted for the digital void.
+            </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">LinkedIn</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">GitHub</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Twitter</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-all" href="#">Dribbble</a>
+</div>
+</footer>
+<!-- Bottom Nav (Mobile Only) -->
+<div class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden bg-surface-container dark:bg-surface-container border-t border-white/5 shadow-2xl rounded-t-full">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Work</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">About</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-110">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit</span>
+<span class="font-label-sm text-label-sm">Writing</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-label-sm">Contact</span>
+</div>
+</div>
+<script>
+        // Micro-interaction for the progress bar at the top
+        const progressBar = document.createElement('div');
+        progressBar.style.position = 'fixed';
+        progressBar.style.top = '0';
+        progressBar.style.left = '0';
+        progressBar.style.height = '3px';
+        progressBar.style.backgroundColor = '#fca311';
+        progressBar.style.zIndex = '9999';
+        progressBar.style.width = '0%';
+        progressBar.style.transition = 'width 0.1s ease-out';
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+        });
+    </script>
+</body></html>

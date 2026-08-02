@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ravi Hadwani | Senior Developer &amp; UI/UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000000",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "outline-variant": "#c4c7c7",
+                        "surface-bright": "#f8f9fb",
+                        "secondary": "#0051d5",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747878",
+                        "on-primary-fixed-variant": "#474646",
+                        "background": "#f8f9fb",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#e7e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "on-surface-variant": "#444748",
+                        "on-primary-container": "#858383",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-container": "#316bf3",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#fefcff",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#dbe1ff",
+                        "surface-variant": "#e1e2e4",
+                        "tertiary-container": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-container": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c8c6c6",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#1c1b1b",
+                        "tertiary-fixed": "#e4e2e2",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-container": "#edeef0",
+                        "on-secondary-fixed": "#00174b",
+                        "on-tertiary-container": "#848483",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-dim": "#d9dadc",
+                        "surface": "#f8f9fb",
+                        "surface-container-highest": "#e1e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "unit-xl": "64px",
+                        "grid-columns": "12",
+                        "gutter": "24px",
+                        "unit-xs": "4px",
+                        "unit-sm": "8px",
+                        "margin-desktop": "64px",
+                        "unit-md": "16px",
+                        "margin-mobile": "24px",
+                        "unit-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "display-xl-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-xl-mobile": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "display-xl": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+                    },
+                    "animation": {
+                        "fade-in-up": "fade-in-up 0.8s ease-out forwards"
+                    },
+                    "keyframes": {
+                        "fade-in-up": {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .grid-bg {
+            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        canvas#ambient-shader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        #custom-cursor.active {
+            transform: scale(4);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media (pointer: coarse) {
+            #custom-cursor { display: none; }
+        }
+
+        /* Smooth Momentum Scroll Helper */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Project Card Interactions */
+        .project-card-image-container {
+            perspective: 1200px;
+        }
+        .project-card-image {
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .project-card-image {
+            transform: scale(1.05) translateY(-5px);
+        }
+        .challenge-reveal {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .challenge-reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden selection:bg-secondary selection:text-white">
+<div id="custom-cursor"></div>
+<canvas id="ambient-shader"></canvas>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 transition-all duration-500">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit-md max-w-[1440px] mx-auto">
+<div class="h-10">
+<span class="font-headline-md text-headline-md tracking-tighter text-primary">Ravi Hadwani</span>
+</div>
+<div class="hidden lg:flex items-center gap-10">
+<a class="nav-link font-label-sm text-label-sm tracking-widest uppercase text-primary font-bold border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="nav-link font-label-sm text-label-sm tracking-widest uppercase text-on-surface-variant/70 hover:text-primary transition-colors" href="#projects">Projects</a>
+<a class="nav-link font-label-sm text-label-sm tracking-widest uppercase text-on-surface-variant/70 hover:text-primary transition-colors" href="#services">Services</a>
+<a class="nav-link font-label-sm text-label-sm tracking-widest uppercase text-on-surface-variant/70 hover:text-primary transition-colors" href="#about">About</a>
+<a class="nav-link font-label-sm text-label-sm tracking-widest uppercase text-on-surface-variant/70 hover:text-primary transition-colors" href="#contact">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-sm uppercase tracking-widest hover:bg-secondary transition-all active:scale-95 shadow-lg shadow-primary/10 cursor-pointer">
+                Let's Build Together
+            </button>
+</div>
+</nav>
+<main class="mt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex flex-col items-center justify-center pt-unit-xl overflow-hidden">
+<div class="grid-bg absolute inset-0 -z-10 opacity-10"></div>
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto text-center z-10 animate-fade-in-up">
+<div class="inline-block px-4 py-1 border border-outline-variant rounded-full mb-8 bg-white/50 backdrop-blur-sm reveal-on-scroll">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-on-surface-variant">Available for new projects</span>
+</div>
+<h1 class="font-display-xl text-display-xl-mobile md:text-display-xl mb-unit-md max-w-5xl mx-auto leading-tight reveal-on-scroll" style="transition-delay: 0.1s">
+                    Designing Beautiful Experiences. Developing Powerful Websites.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant/80 max-w-2xl mx-auto mb-unit-lg reveal-on-scroll" style="transition-delay: 0.2s">
+                    I help businesses and startups transform ideas into fast, responsive, SEO-friendly websites using UI/UX design, modern frontend development, and WordPress.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-unit-xl reveal-on-scroll" style="transition-delay: 0.3s">
+<a class="bg-primary text-on-primary px-unit-lg py-4 rounded-lg font-label-sm uppercase tracking-widest w-full sm:w-auto hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary/20" href="#projects">
+                        View My Work
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<a class="bg-white/80 backdrop-blur-md border border-outline-variant text-primary px-unit-lg py-4 rounded-lg font-label-sm uppercase tracking-widest w-full sm:w-auto hover:bg-surface-container transition-all" href="#contact">
+                        Start a Project
+                    </a>
+</div>
+<div class="relative max-w-5xl mx-auto group perspective-1000 reveal-on-scroll" style="transition-delay: 0.4s">
+<div class="transform-style-3d group-hover:rotate-x-1 transition-transform duration-1000">
+<img alt="Sophisticated clean UI design on a MacBook Pro" class="w-full rounded-3xl shadow-2xl border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5rAtpvicGwSHcxyFMjb_pfRR4LxHTsYgWNr7eQqNiYdSjazL39KU_o483GA9o10qNcYEmT43Rr0IH8_LpBfyIDYo1pmUnbGdSzbQ657fzkFv1gI728Ap60ATluZvpet77TOWdSv3zuryWMWb_GiVbRwFwp1CKKbm_eigttdchvteTdPVN0lOwLOTOnTsWhwd4BvMr0mruAa-PpUWNAJwoSbwR084-fiJUGo08f_FIy1mdVSEHAmz27w"/>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-unit-xl bg-white/40 backdrop-blur-sm reveal-on-scroll" id="about">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-unit-lg">
+<div class="md:col-span-5">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold mb-4 block">About Me</span>
+<h2 class="font-headline-lg text-headline-lg mb-unit-md">Crafting digital excellence with precision and purpose.</h2>
+</div>
+<div class="md:col-span-7 flex flex-col gap-unit-md">
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                        As a Senior Frontend Developer and UI/UX Designer, I bridge the gap between design and technology. My approach is rooted in Swiss design principles—prioritizing clarity, readability, and functional beauty.
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant/80 border-l-2 border-secondary/20 pl-6 py-2 italic">
+                        I specialize in creating high-performance WordPress solutions and custom frontend architectures. My focus extends beyond aesthetics; I build for accessibility, speed, and conversion.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Expertise Section -->
+<section class="py-unit-xl bg-surface-container-lowest/50 backdrop-blur-sm border-y border-outline-variant/20 reveal-on-scroll" id="services">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<div class="text-center mb-unit-xl">
+<h2 class="font-headline-lg text-headline-lg mb-4">Expertise &amp; Tech Stack</h2>
+<div class="w-16 h-1 bg-secondary mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-unit-md">
+<!-- Service 1 -->
+<div class="p-unit-lg bg-white/60 backdrop-blur-md border border-outline-variant rounded-3xl hover:border-secondary hover:bg-white transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2 reveal-on-scroll" style="transition-delay: 0.1s">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6 group-hover:scale-110 transition-transform block">draw</span>
+<h3 class="font-headline-md text-headline-md mb-unit-sm">UI/UX Design</h3>
+<p class="text-on-surface-variant/70 mb-unit-md">Creating intuitive, user-centric interfaces that engage and convert.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">Figma</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">Prototyping</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">User Research</span>
+</div>
+</div>
+<!-- Service 2 -->
+<div class="p-unit-lg bg-white/60 backdrop-blur-md border border-outline-variant rounded-3xl hover:border-secondary hover:bg-white transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2 reveal-on-scroll" style="transition-delay: 0.2s">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6 group-hover:scale-110 transition-transform block">code</span>
+<h3 class="font-headline-md text-headline-md mb-unit-sm">Frontend Development</h3>
+<p class="text-on-surface-variant/70 mb-unit-md">Building fast, responsive, and maintainable web applications.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">React</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">Tailwind CSS</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">JavaScript</span>
+</div>
+</div>
+<!-- Service 3 -->
+<div class="p-unit-lg bg-white/60 backdrop-blur-md border border-outline-variant rounded-3xl hover:border-secondary hover:bg-white transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2 reveal-on-scroll" style="transition-delay: 0.3s">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6 group-hover:scale-110 transition-transform block">terminal</span>
+<h3 class="font-headline-md text-headline-md mb-unit-sm">WordPress Solutions</h3>
+<p class="text-on-surface-variant/70 mb-unit-md">Custom themes and plugins tailored to your specific business needs.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">PHP</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">Elementor</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-tighter">ACF</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="py-unit-xl reveal-on-scroll" id="projects">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-unit-xl gap-unit-md">
+<div>
+<h2 class="font-display-xl text-display-xl-mobile md:text-headline-lg">Selected Projects</h2>
+<p class="text-on-surface-variant/70 mt-2">A showcase of high-performance web solutions and detailed case studies.</p>
+</div>
+<a class="nav-link font-label-sm text-label-sm uppercase tracking-widest text-primary border-b border-primary hover:text-secondary hover:border-secondary transition-all" href="#">View Archive</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Project 1 -->
+<div class="group reveal-on-scroll">
+<div class="project-card-image-container relative aspect-video overflow-hidden border border-outline-variant rounded-3xl bg-surface-container hover:shadow-2xl transition-shadow duration-700">
+<img alt="Corporate Business Website" class="project-card-image w-full h-full object-cover rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxhUlbqqp03bQDcvlel36RwIpfoSRody5FlxLTLNZI30l7xfa7THGjZal-to3U5y3a11T_8u8rqnUfqPREuu5NsgOWEKEp3wWucVpNtpr_XM3XuAb-T28APUDoIcjnPXrzSwTglPMlFq7PRunCFJi5CQkTusczpl6siyWb2o9hHtkAsn7eD8uRpc1SNWgMNjb0BbstGWnwdFmmy6459LmWPUgKkuxHugfCid5Cjj2o-v2-KkQPi4gsug"/>
+<div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-6 backdrop-blur-sm rounded-3xl">
+<button class="bg-white text-primary px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0">Preview</button>
+<button class="border border-white text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all transform translate-y-4 group-hover:translate-y-0">Case Study</button>
+</div>
+</div>
+<div class="mt-8 flex flex-col md:flex-row gap-8 px-4">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md mb-2">Corporate Business Website</h4>
+<div class="flex gap-2 mb-4">
+<span class="text-[10px] uppercase font-bold text-secondary">WordPress</span>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40">•</span>
+<span class="text-[10px] uppercase font-bold text-secondary">PHP</span>
+<span class="text-[10px] uppercase font-bold text-secondary">• Tailwind</span>
+</div>
+</div>
+<div class="md:w-2/3 challenge-reveal">
+<p class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">The Challenge</p>
+<p class="text-on-surface-variant/80 text-sm leading-relaxed">Modernizing a legacy enterprise platform to handle high traffic while maintaining a strict Swiss-grid layout and sub-2s load times across all global regions.</p>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group reveal-on-scroll" style="transition-delay: 100ms">
+<div class="project-card-image-container relative aspect-video overflow-hidden border border-outline-variant rounded-3xl bg-surface-container hover:shadow-2xl transition-shadow duration-700">
+<img alt="Restaurant Website" class="project-card-image w-full h-full object-cover rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATecP6WNVjQ6guPLuq9sTYQf8qg91sIL5M3jb9gSRlLyxWbqJOf2dnTYk2G3uAVtds4S4-8IOvEN7_PEyBR9QpPKzxRZJMWvldwlBnVqdlGxvTEWQnOoCbp5RZs0YcR4WY0NEsitzzcV5hMuf20JWChW5QbNCIHM68Wq981ZhgwGB2feDgzwx8M2IUaAB5mcPgaitKvf6r-BJT7MthI_q-AFnTBU0TOOnGOdHladrCRJoGBJncBXFkOw"/>
+<div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-6 backdrop-blur-sm rounded-3xl">
+<button class="bg-white text-primary px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0">Preview</button>
+<button class="border border-white text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all transform translate-y-4 group-hover:translate-y-0">Case Study</button>
+</div>
+</div>
+<div class="mt-8 flex flex-col md:flex-row gap-8 px-4">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md mb-2">Fine Dining Experience</h4>
+<div class="flex gap-2 mb-4">
+<span class="text-[10px] uppercase font-bold text-secondary">Next.js</span>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40">•</span>
+<span class="text-[10px] uppercase font-bold text-secondary">Frontend</span>
+</div>
+</div>
+<div class="md:w-2/3 challenge-reveal">
+<p class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">The Process</p>
+<p class="text-on-surface-variant/80 text-sm leading-relaxed">Focused on sensory visual design, implementing fluid typography and smooth page transitions that mirror the elegance of the physical dining experience.</p>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="group reveal-on-scroll">
+<div class="project-card-image-container relative aspect-video overflow-hidden border border-outline-variant rounded-3xl bg-surface-container hover:shadow-2xl transition-shadow duration-700">
+<img alt="Real Estate Website" class="project-card-image w-full h-full object-cover rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3bKvPcwBnJg3a6nTS9EVr0DAkks-GkYVbIxolC8H16A2wyXMEQNDVs7DugzJg4aLH5yANhul6_MfZzjEeSxzjetgne9ieXcIvrbKfiHHxJ5OLoA1GSakPSpA50PUom30b-bbBxemMVsIeakQ3Vg8-PVt234Fp1bTZ3rgEzhSnUjSyI2y8dyTZ0EDtmjImizp50NyxO24ZeB0dn4yhm9vT_7h5kgXeWVAxwV_IOhUAbPUFcTH4YWPDDw"/>
+<div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-6 backdrop-blur-sm rounded-3xl">
+<button class="bg-white text-primary px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0">Preview</button>
+<button class="border border-white text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all transform translate-y-4 group-hover:translate-y-0">Case Study</button>
+</div>
+</div>
+<div class="mt-8 flex flex-col md:flex-row gap-8 px-4">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md mb-2">Verve Real Estate</h4>
+<div class="flex gap-2 mb-4">
+<span class="text-[10px] uppercase font-bold text-secondary">React</span>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40">•</span>
+<span class="text-[10px] uppercase font-bold text-secondary">Framer Motion</span>
+</div>
+</div>
+<div class="md:w-2/3 challenge-reveal">
+<p class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">The Challenge</p>
+<p class="text-on-surface-variant/80 text-sm leading-relaxed">Developing an intuitive map-based search system that handles thousands of listings with real-time updates and zero latency UI responses.</p>
+</div>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="group reveal-on-scroll" style="transition-delay: 100ms">
+<div class="project-card-image-container relative aspect-video overflow-hidden border border-outline-variant rounded-3xl bg-surface-container hover:shadow-2xl transition-shadow duration-700">
+<img alt="AI SaaS Landing Page" class="project-card-image w-full h-full object-cover rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_inDICKsoC7P5x-2D_17ef6R2mRIMfPIJ3nDihYBcwzOxYjMrjpbXj6-evsfqmKEmQt3r_mtZK1frGy25fASdEJsLIBAWeu6X51YTQ15UhmbC6lDYAAjy96-5Oy40qKIQBm4WAseojML-YTKbHxyqBECK4nWWl66mcfVbdM1poy_RXLdQWHRHz_9dJudWcCJj05DsbM7aZiDfIFqy6e0ggU-zzWyLmRQnOD4fm85VE41_-_4Kmsy4sg"/>
+<div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-6 backdrop-blur-sm rounded-3xl">
+<button class="bg-white text-primary px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0">Preview</button>
+<button class="border border-white text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all transform translate-y-4 group-hover:translate-y-0">Case Study</button>
+</div>
+</div>
+<div class="mt-8 flex flex-col md:flex-row gap-8 px-4">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md mb-2">AI Cloud Platform</h4>
+<div class="flex gap-2 mb-4">
+<span class="text-[10px] uppercase font-bold text-secondary">React</span>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/40">•</span>
+<span class="text-[10px] uppercase font-bold text-secondary">Three.js</span>
+</div>
+</div>
+<div class="md:w-2/3 challenge-reveal">
+<p class="text-sm font-bold uppercase tracking-widest text-on-surface-variant/60 mb-2">The Process</p>
+<p class="text-on-surface-variant/80 text-sm leading-relaxed">Implementing advanced WebGL shaders to visualize AI data processing, resulting in a 40% increase in user session duration and brand engagement.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats & Process -->
+<section class="py-unit-xl bg-primary text-on-primary reveal-on-scroll">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-unit-lg mb-unit-xl text-center">
+<div class="reveal-on-scroll" style="transition-delay: 0.1s">
+<div class="text-4xl md:text-6xl font-bold mb-2">150+</div>
+<div class="text-label-sm uppercase tracking-widest text-on-primary-container">Projects Completed</div>
+</div>
+<div class="reveal-on-scroll" style="transition-delay: 0.2s">
+<div class="text-4xl md:text-6xl font-bold mb-2">10+</div>
+<div class="text-label-sm uppercase tracking-widest text-on-primary-container">Years Experience</div>
+</div>
+<div class="reveal-on-scroll" style="transition-delay: 0.3s">
+<div class="text-4xl md:text-6xl font-bold mb-2">100%</div>
+<div class="text-label-sm uppercase tracking-widest text-on-primary-container">Happy Clients</div>
+</div>
+<div class="reveal-on-scroll" style="transition-delay: 0.4s">
+<div class="text-4xl md:text-6xl font-bold mb-2">200+</div>
+<div class="text-label-sm uppercase tracking-widest text-on-primary-container">Websites Built</div>
+</div>
+</div>
+<div class="mt-unit-xl border-t border-on-primary/10 pt-unit-xl">
+<h2 class="font-headline-lg text-headline-lg mb-unit-lg text-center reveal-on-scroll">The Project Journey</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+<div class="flex flex-col gap-4 reveal-on-scroll" style="transition-delay: 0.1s">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Step 01</span>
+<h4 class="font-bold text-xl">Discovery &amp; Research</h4>
+<p class="text-on-primary/60 text-sm">Understanding goals, audience, and market landscape.</p>
+</div>
+<div class="flex flex-col gap-4 reveal-on-scroll" style="transition-delay: 0.2s">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Step 02</span>
+<h4 class="font-bold text-xl">Wireframes &amp; UI</h4>
+<p class="text-on-primary/60 text-sm">Architecting the flow and designing the visual layer.</p>
+</div>
+<div class="flex flex-col gap-4 reveal-on-scroll" style="transition-delay: 0.3s">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Step 03</span>
+<h4 class="font-bold text-xl">Development</h4>
+<p class="text-on-primary/60 text-sm">Building with clean code and responsive layouts.</p>
+</div>
+<div class="flex flex-col gap-4 reveal-on-scroll" style="transition-delay: 0.4s">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Step 04</span>
+<h4 class="font-bold text-xl">WordPress Integration</h4>
+<p class="text-on-primary/60 text-sm">Converting designs into powerful CMS solutions.</p>
+</div>
+<div class="flex flex-col gap-4 reveal-on-scroll" style="transition-delay: 0.5s">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Step 05</span>
+<h4 class="font-bold text-xl">Launch &amp; Support</h4>
+<p class="text-on-primary/60 text-sm">Testing, optimization, and post-launch maintenance.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-unit-xl bg-surface/30 backdrop-blur-sm reveal-on-scroll">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg mb-unit-xl reveal-on-scroll">What Clients Say</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white/60 backdrop-blur-md p-unit-lg border border-outline-variant rounded-3xl text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 reveal-on-scroll" style="transition-delay: 0.1s">
+<p class="text-on-surface-variant italic mb-6">"Exceptional eye for detail. The WordPress site built for our agency surpassed all expectations in speed and design quality."</p>
+<div>
+<p class="font-bold">Sarah Jenkins</p>
+<p class="text-xs text-on-surface-variant/50 uppercase tracking-widest">CEO, Modus Creative</p>
+</div>
+</div>
+<div class="bg-white/60 backdrop-blur-md p-unit-lg border border-outline-variant rounded-3xl text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 reveal-on-scroll" style="transition-delay: 0.2s">
+<p class="text-on-surface-variant italic mb-6">"A master of the frontend. Our SaaS dashboard is now significantly faster and more intuitive for our users."</p>
+<div>
+<p class="font-bold">David Chen</p>
+<p class="text-xs text-on-surface-variant/50 uppercase tracking-widest">Product Lead, CloudFlow</p>
+</div>
+</div>
+<div class="bg-white/60 backdrop-blur-md p-unit-lg border border-outline-variant rounded-3xl text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 reveal-on-scroll" style="transition-delay: 0.3s">
+<p class="text-on-surface-variant italic mb-6">"Reliable, professional, and highly skilled. The perfect partner for long-term web development projects."</p>
+<div>
+<p class="font-bold">Elena Rodriguez</p>
+<p class="text-xs text-on-surface-variant/50 uppercase tracking-widest">Founder, Verve Homes</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-unit-xl bg-white/40 backdrop-blur-sm reveal-on-scroll" id="contact">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-unit-xl">
+<div>
+<h2 class="font-display-xl text-display-xl-mobile md:text-headline-lg mb-unit-md reveal-on-scroll">Let's build your next digital masterpiece.</h2>
+<p class="text-body-lg text-on-surface-variant/70 mb-unit-lg max-w-md reveal-on-scroll">
+                        Have a project in mind? Reach out and let's discuss how we can transform your vision into reality.
+                    </p>
+<div class="space-y-6">
+<div class="flex items-center gap-4 group reveal-on-scroll">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">mail</span>
+<span class="text-lg">hello@ravihadwani.com</span>
+</div>
+<div class="flex items-center gap-4 group reveal-on-scroll">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">location_on</span>
+<span class="text-lg">London, United Kingdom</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low/80 p-unit-lg rounded-3xl shadow-inner reveal-on-scroll">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-bold uppercase tracking-widest opacity-50">Name</label>
+<input class="w-full bg-white border border-outline-variant p-4 rounded-xl focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all" placeholder="John Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-bold uppercase tracking-widest opacity-50">Email</label>
+<input class="w-full bg-white border border-outline-variant p-4 rounded-xl focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all" placeholder="john@example.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-xs font-bold uppercase tracking-widest opacity-50">Project Type</label>
+<select class="w-full bg-white border border-outline-variant p-4 rounded-xl focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all appearance-none">
+<option>WordPress Development</option>
+<option>UI/UX Design</option>
+<option>Frontend Development</option>
+<option>Full Website Build</option>
+</select>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-xs font-bold uppercase tracking-widest opacity-50">Message</label>
+<textarea class="w-full bg-white border border-outline-variant p-4 rounded-xl focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all" placeholder="Tell me about your project..." rows="4"></textarea>
+</div>
+<button class="md:col-span-2 bg-primary text-on-primary py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-secondary transition-all active:scale-[0.98] shadow-lg shadow-primary/20">
+                            Let's Build Your Website
+                        </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-on-primary py-unit-xl border-t border-on-primary/10">
+<div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-unit-lg mb-12">
+<div class="h-10">
+<span class="font-headline-md text-headline-md tracking-tighter text-white">Ravi Hadwani</span>
+</div>
+<div class="flex gap-10">
+<a class="nav-link text-on-primary/60 hover:text-white transition-colors duration-200 uppercase text-xs tracking-widest font-bold" href="#">LinkedIn</a>
+<a class="nav-link text-on-primary/60 hover:text-white transition-colors duration-200 uppercase text-xs tracking-widest font-bold" href="#">GitHub</a>
+<a class="nav-link text-on-primary/60 hover:text-white transition-colors duration-200 uppercase text-xs tracking-widest font-bold" href="#">Behance</a>
+<a class="nav-link text-on-primary/60 hover:text-white transition-colors duration-200 uppercase text-xs tracking-widest font-bold" href="#">Email</a>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-on-primary/5">
+<div class="text-xs text-on-primary/40 uppercase tracking-widest font-medium mb-4 md:mb-0">© 2024 Ravi Hadwani — HANDCRAFTED WITH PRECISION</div>
+<div class="text-[10px] text-on-primary/20 uppercase tracking-tighter">Built with passion &amp; purpose</div>
+</div>
+</div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Custom Cursor ---
+            const cursor = document.getElementById('custom-cursor');
+            let cursorX = 0, cursorY = 0;
+            let targetX = 0, targetY = 0;
+            const lerpSpeed = 0.2;
+
+            document.addEventListener('mousemove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (targetX - cursorX - 10) * lerpSpeed;
+                cursorY += (targetY - cursorY - 10) * lerpSpeed;
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Magnetic effect / Cursor state change
+            const interactiveElements = document.querySelectorAll('button, a, .group, input, select, textarea');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+            });
+
+            // --- 2. Scroll Reveal Animations ---
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Sticky Nav Refinement
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('py-unit-sm', 'bg-white/95', 'shadow-md');
+                    nav.classList.remove('py-unit-md', 'bg-surface/80');
+                } else {
+                    nav.classList.remove('py-unit-sm', 'bg-white/95', 'shadow-md');
+                    nav.classList.add('py-unit-md', 'bg-surface/80');
+                }
+            });
+
+            // --- 3. Ambient Shader Background ---
+            initAmbientShader();
+        });
+
+        function initAmbientShader() {
+            const canvas = document.getElementById('ambient-shader');
+            if (!canvas) return;
+            const gl = canvas.getContext('webgl');
+            if (!gl) return;
+
+            const vertexSource = `
+                attribute vec2 position;
+                varying vec2 v_texCoord;
+                void main() {
+                    v_texCoord = position * 0.5 + 0.5;
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            `;
+
+            const fragmentSource = `
+                precision highp float;
+                varying vec2 v_texCoord;
+                uniform float u_time;
+                uniform vec2 u_resolution;
+                uniform vec2 u_mouse;
+
+                void main() {
+                    vec2 uv = v_texCoord;
+                    vec2 mouse = u_mouse / u_resolution;
+                    
+                    float noise = sin(uv.x * 3.0 + u_time * 0.5) * cos(uv.y * 2.0 - u_time * 0.3);
+                    float glow = 1.0 - distance(uv, mouse);
+                    glow = pow(max(0.0, glow), 4.0) * 0.3;
+                    
+                    vec3 color1 = vec3(0.97, 0.98, 0.98); 
+                    vec3 color2 = vec3(0.92, 0.93, 0.95); 
+                    vec3 accent = vec3(0.07, 0.13, 0.24); 
+                    
+                    vec3 finalColor = mix(color1, color2, uv.y + noise * 0.1);
+                    finalColor = mix(finalColor, accent, glow);
+                    
+                    gl_FragColor = vec4(finalColor, 0.1); 
+                }
+            `;
+
+            function createShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    console.error(gl.getShaderInfoLog(shader));
+                    gl.deleteShader(shader);
+                    return null;
+                }
+                return shader;
+            }
+
+            const program = gl.createProgram();
+            gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vertexSource));
+            gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fragmentSource));
+            gl.linkProgram(program);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+
+            const positionLocation = gl.getAttribLocation(program, "position");
+            const timeLocation = gl.getUniformLocation(program, "u_time");
+            const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+            const mouseLocation = gl.getUniformLocation(program, "u_mouse");
+
+            let mX = 0, mY = 0;
+            window.addEventListener('mousemove', (e) => { mX = e.clientX; mY = e.clientY; });
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function render(time) {
+                gl.useProgram(program);
+                gl.enableVertexAttribArray(positionLocation);
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+                gl.uniform1f(timeLocation, time * 0.001);
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.uniform2f(mouseLocation, mX, canvas.height - mY);
+
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+        }
+    </script>
+</body></html>
