@@ -226,11 +226,21 @@ const FALLBACK_BLOG_POSTS: BlogPost[] = [
   },
 ];
 
-async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 5000) {
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 8000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'application/json, text/plain, */*',
+      ...(options.headers || {}),
+    };
+    const response = await fetch(url, {
+      cache: 'no-store',
+      ...options,
+      headers,
+      signal: controller.signal,
+    });
     clearTimeout(id);
     return response;
   } catch (err) {
@@ -244,9 +254,9 @@ export async function getProjects(): Promise<Project[]> {
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_project?_embed`, {
-      next: { revalidate: 60 },
-    }, 5000);
-    if (!res.ok) throw new Error('WordPress API error');
+      cache: 'no-store',
+    }, 8000);
+    if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) return FALLBACK_PROJECTS;
@@ -263,6 +273,7 @@ export async function getProjects(): Promise<Project[]> {
       githubUrl: item.meta?.github_url || '#',
     }));
   } catch (error) {
+    console.error('Error fetching WP projects:', error);
     return FALLBACK_PROJECTS;
   }
 }
@@ -272,9 +283,9 @@ export async function getServices(): Promise<Service[]> {
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service`, {
-      next: { revalidate: 60 },
-    }, 5000);
-    if (!res.ok) throw new Error('WordPress API error');
+      cache: 'no-store',
+    }, 8000);
+    if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) return FALLBACK_SERVICES;
@@ -287,6 +298,7 @@ export async function getServices(): Promise<Service[]> {
       tags: item.meta?.tags ? (typeof item.meta.tags === 'string' ? JSON.parse(item.meta.tags) : item.meta.tags) : [],
     }));
   } catch (error) {
+    console.error('Error fetching WP services:', error);
     return FALLBACK_SERVICES;
   }
 }
@@ -296,9 +308,9 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_testimonial?_embed`, {
-      next: { revalidate: 60 },
-    }, 5000);
-    if (!res.ok) throw new Error('WordPress API error');
+      cache: 'no-store',
+    }, 8000);
+    if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) return FALLBACK_TESTIMONIALS;
@@ -311,6 +323,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       company: item.meta?.company || '',
     }));
   } catch (error) {
+    console.error('Error fetching WP testimonials:', error);
     return FALLBACK_TESTIMONIALS;
   }
 }
@@ -320,9 +333,9 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/posts?_embed`, {
-      next: { revalidate: 60 },
-    }, 5000);
-    if (!res.ok) throw new Error('WordPress API error');
+      cache: 'no-store',
+    }, 8000);
+    if (!res.ok) throw new Error(`WordPress API error: ${res.status}`);
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) return FALLBACK_BLOG_POSTS;
@@ -340,9 +353,11 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       featured: index === 0,
     }));
   } catch (error) {
+    console.error('Error fetching WP blog posts:', error);
     return FALLBACK_BLOG_POSTS;
   }
 }
+
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   const posts = await getBlogPosts();
