@@ -162,12 +162,23 @@ class RH_Portfolio_REST_API {
             $raw_tags = get_post_meta( $post->ID, '_rh_service_tags', true ) ?: ( get_post_meta( $post->ID, 'tags', true ) ?: 'Design, Development' );
             $tags     = array_values( array_filter( array_map( 'trim', explode( ',', $raw_tags ) ) ) );
 
+            $raw_deliverables = get_post_meta( $post->ID, '_rh_service_deliverables', true ) ?: get_post_meta( $post->ID, 'deliverables', true );
+            $deliverables     = array();
+            if ( ! empty( $raw_deliverables ) ) {
+                $lines = explode( "\n", $raw_deliverables );
+                $deliverables = array_values( array_filter( array_map( 'trim', $lines ) ) );
+            }
+
+            $btn_text = get_post_meta( $post->ID, '_rh_service_btn_text', true ) ?: '';
+
             $data[] = array(
-                'id'          => $post->ID,
-                'icon'        => $icon,
-                'title'       => get_the_title( $post ),
-                'description' => wp_strip_all_tags( $post->post_content ),
-                'tags'        => $tags,
+                'id'           => $post->ID,
+                'icon'         => $icon,
+                'title'        => get_the_title( $post ),
+                'description'  => wp_strip_all_tags( $post->post_content ),
+                'tags'         => $tags,
+                'deliverables' => $deliverables,
+                'buttonText'   => $btn_text,
             );
         }
 

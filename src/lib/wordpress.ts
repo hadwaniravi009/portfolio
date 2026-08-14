@@ -17,6 +17,8 @@ export interface Service {
   title: string;
   description: string;
   tags: string[];
+  deliverables?: string[];
+  buttonText?: string;
 }
 
 export interface Testimonial {
@@ -352,6 +354,8 @@ export async function getServices(): Promise<Service[]> {
           title: item.title,
           description: item.description || 'High-performance tailored solution engineered with modern web technologies.',
           tags: parseTags(item.tags, ['Design', 'Development', 'API']),
+          deliverables: Array.isArray(item.deliverables) && item.deliverables.length > 0 ? item.deliverables : undefined,
+          buttonText: item.buttonText || undefined,
         }));
       }
     }
@@ -375,6 +379,8 @@ export async function getServices(): Promise<Service[]> {
       title: item.title.rendered,
       description: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || 'High-performance tailored solution engineered with modern web technologies.',
       tags: parseTags(item.meta?._rh_service_tags || item.meta?.tags, ['Design', 'Development', 'API']),
+      deliverables: item.meta?._rh_service_deliverables ? parseTags(item.meta._rh_service_deliverables.split('\n')) : undefined,
+      buttonText: item.meta?._rh_service_btn_text || undefined,
     }));
   } catch (error) {
     console.error('Error fetching WP services:', error);

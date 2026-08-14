@@ -157,40 +157,56 @@ class RH_Portfolio_Meta_Boxes {
     public function render_service_meta_box( $post ) {
         wp_nonce_field( 'rh_save_service_meta', 'rh_service_nonce' );
 
-        $icon = get_post_meta( $post->ID, '_rh_service_icon', true ) ?: ( get_post_meta( $post->ID, 'icon', true ) ?: 'code' );
-        $tags = get_post_meta( $post->ID, '_rh_service_tags', true ) ?: ( get_post_meta( $post->ID, 'tags', true ) ?: 'React, Next.js, Tailwind' );
+        $icon         = get_post_meta( $post->ID, '_rh_service_icon', true ) ?: ( get_post_meta( $post->ID, 'icon', true ) ?: 'code' );
+        $tags         = get_post_meta( $post->ID, '_rh_service_tags', true ) ?: ( get_post_meta( $post->ID, 'tags', true ) ?: 'React, Next.js, Tailwind' );
+        $deliverables = get_post_meta( $post->ID, '_rh_service_deliverables', true ) ?: '';
+        $btn_text     = get_post_meta( $post->ID, '_rh_service_btn_text', true ) ?: '';
 
         ?>
         <div class="rh-meta-box-wrapper">
             <div class="rh-form-grid">
                 <!-- Icon Selector -->
                 <div class="rh-form-group">
-                    <label for="rh_service_icon"><strong><?php _e( 'Service Icon (Keyword or Image URL):', 'rh-portfolio-core' ); ?></strong></label>
+                    <label for="rh_service_icon"><strong><?php _e( '1. Service Icon (Preset Keyword or Upload Custom Icon):', 'rh-portfolio-manager' ); ?></strong></label>
                     <div class="rh-input-with-button">
-                        <input type="text" id="rh_service_icon" name="rh_service_icon" value="<?php echo esc_attr( $icon ); ?>" list="rh_icon_presets" placeholder="e.g. code, draw, terminal, palette" class="widefat" />
-                        <button type="button" class="button rh-media-upload-btn" data-target="#rh_service_icon"><?php _e( 'Upload Icon', 'rh-portfolio-core' ); ?></button>
+                        <input type="text" id="rh_service_icon" name="rh_service_icon" value="<?php echo esc_attr( $icon ); ?>" list="rh_icon_presets" placeholder="e.g. code, draw, terminal, palette, zap, shield" class="widefat" />
+                        <button type="button" class="button rh-media-upload-btn" data-target="#rh_service_icon"><?php _e( 'Upload Icon', 'rh-portfolio-manager' ); ?></button>
                     </div>
                     <datalist id="rh_icon_presets">
-                        <option value="code"><?php _e( 'Frontend / Code (Code Icon)', 'rh-portfolio-core' ); ?></option>
-                        <option value="draw"><?php _e( 'UI/UX Design (Palette / Draw Icon)', 'rh-portfolio-core' ); ?></option>
-                        <option value="terminal"><?php _e( 'WordPress / Headless Backend (Terminal Icon)', 'rh-portfolio-core' ); ?></option>
-                        <option value="palette"><?php _e( 'Graphic Design / Art', 'rh-portfolio-core' ); ?></option>
-                        <option value="zap"><?php _e( 'High Performance / Speed', 'rh-portfolio-core' ); ?></option>
-                        <option value="shield"><?php _e( 'Security Hardening', 'rh-portfolio-core' ); ?></option>
+                        <option value="code"><?php _e( 'Frontend / Code (Code Icon)', 'rh-portfolio-manager' ); ?></option>
+                        <option value="draw"><?php _e( 'UI/UX Design (Draw / Pen Icon)', 'rh-portfolio-manager' ); ?></option>
+                        <option value="palette"><?php _e( 'Graphic Design / Art (Palette Icon)', 'rh-portfolio-manager' ); ?></option>
+                        <option value="terminal"><?php _e( 'WordPress & Headless WP (Terminal Icon)', 'rh-portfolio-manager' ); ?></option>
+                        <option value="zap"><?php _e( 'High Performance / Speed (Zap Lightning Icon)', 'rh-portfolio-manager' ); ?></option>
+                        <option value="shield"><?php _e( 'Security Hardening (Shield Icon)', 'rh-portfolio-manager' ); ?></option>
                     </datalist>
-                    <span class="rh-help-text"><?php _e( 'Choose a preset keyword (draw, code, terminal) or upload a custom SVG/PNG icon via WordPress Media.', 'rh-portfolio-core' ); ?></span>
+                    <span class="rh-help-text"><?php _e( 'Choose a preset keyword above or upload an SVG/PNG icon.', 'rh-portfolio-manager' ); ?></span>
                 </div>
 
                 <!-- Deliverables / Tags -->
                 <div class="rh-form-group">
-                    <label for="rh_service_tags"><strong><?php _e( 'Deliverables / Tech Tags (Comma-separated):', 'rh-portfolio-core' ); ?></strong></label>
-                    <input type="text" id="rh_service_tags" name="rh_service_tags" value="<?php echo esc_attr( $tags ); ?>" placeholder="e.g. Figma, Prototyping, Design Systems" class="widefat" />
-                    <span class="rh-help-text"><?php _e( 'Technologies and deliverables associated with this capability.', 'rh-portfolio-core' ); ?></span>
+                    <label for="rh_service_tags"><strong><?php _e( '2. Tech Stack Badges (Comma-separated):', 'rh-portfolio-manager' ); ?></strong></label>
+                    <input type="text" id="rh_service_tags" name="rh_service_tags" value="<?php echo esc_attr( $tags ); ?>" placeholder="e.g. React, Next.js, Tailwind, TypeScript" class="widefat" />
+                    <span class="rh-help-text"><?php _e( 'Badges displayed at the bottom of the card.', 'rh-portfolio-manager' ); ?></span>
+                </div>
+
+                <!-- Custom Deliverables (3 Bullet Points) -->
+                <div class="rh-form-group rh-full-width">
+                    <label for="rh_service_deliverables"><strong><?php _e( '3. Included Deliverables (Bullet Points - 1 per line):', 'rh-portfolio-manager' ); ?></strong></label>
+                    <textarea id="rh_service_deliverables" name="rh_service_deliverables" rows="3" class="widefat" placeholder="Swiss Grid Hierarchy & Figma Prototypes&#10;Conversion-Focused User Journey Mapping&#10;Bespoke Visual Tokens & Typography System"><?php echo esc_textarea( $deliverables ); ?></textarea>
+                    <span class="rh-help-text"><?php _e( 'Type each checkmark bullet point on a new line. Leave empty for automatic defaults.', 'rh-portfolio-manager' ); ?></span>
+                </div>
+
+                <!-- Custom CTA Button Text -->
+                <div class="rh-form-group rh-full-width">
+                    <label for="rh_service_btn_text"><strong><?php _e( '4. Custom Action Button Text (Optional):', 'rh-portfolio-manager' ); ?></strong></label>
+                    <input type="text" id="rh_service_btn_text" name="rh_service_btn_text" value="<?php echo esc_attr( $btn_text ); ?>" placeholder="e.g. Hire For UI/UX Design" class="widefat" />
+                    <span class="rh-help-text"><?php _e( 'Defaults to "Hire For [Service Name]".', 'rh-portfolio-manager' ); ?></span>
                 </div>
             </div>
 
             <div class="rh-tip-box">
-                ℹ️ <strong><?php _e( 'Note:', 'rh-portfolio-core' ); ?></strong> <?php _e( 'The main service description is written in the main WordPress editor above.', 'rh-portfolio-core' ); ?>
+                ℹ️ <strong><?php _e( 'Service Description:', 'rh-portfolio-manager' ); ?></strong> <?php _e( 'Write the 1-2 sentence service description in the main WordPress editor at the top.', 'rh-portfolio-manager' ); ?>
             </div>
         </div>
         <?php
@@ -319,14 +335,19 @@ class RH_Portfolio_Meta_Boxes {
 
         // 2. Save Service Meta
         if ( isset( $_POST['rh_service_nonce'] ) && wp_verify_nonce( $_POST['rh_service_nonce'], 'rh_save_service_meta' ) ) {
-            $icon = sanitize_text_field( $_POST['rh_service_icon'] ?? 'code' );
-            $tags = sanitize_text_field( $_POST['rh_service_tags'] ?? '' );
+            $icon         = sanitize_text_field( $_POST['rh_service_icon'] ?? 'code' );
+            $tags         = sanitize_text_field( $_POST['rh_service_tags'] ?? '' );
+            $deliverables = sanitize_textarea_field( $_POST['rh_service_deliverables'] ?? '' );
+            $btn_text     = sanitize_text_field( $_POST['rh_service_btn_text'] ?? '' );
 
             update_post_meta( $post_id, '_rh_service_icon', $icon );
             update_post_meta( $post_id, '_rh_service_tags', $tags );
+            update_post_meta( $post_id, '_rh_service_deliverables', $deliverables );
+            update_post_meta( $post_id, '_rh_service_btn_text', $btn_text );
 
             update_post_meta( $post_id, 'icon', $icon );
             update_post_meta( $post_id, 'tags', $tags );
+            update_post_meta( $post_id, 'deliverables', $deliverables );
         }
 
         // 3. Save Testimonial Meta

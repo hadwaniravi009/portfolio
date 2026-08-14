@@ -118,7 +118,10 @@ export default function Services({ services }: ServicesProps) {
         {/* Services Cards Grid with 3D Spotlight Hover Effect */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => {
-            const deliverables = getDeliverables(service.title, service.tags, service.description);
+            const deliverables =
+              service.deliverables && service.deliverables.length > 0
+                ? service.deliverables
+                : getDeliverables(service.title, service.tags, service.description);
             const serviceNumber = (index + 1).toString().padStart(2, '0');
 
             return (
@@ -185,7 +188,7 @@ export default function Services({ services }: ServicesProps) {
                     href="#contact"
                     className="w-full bg-[#f8f9fb] group-hover:bg-[#0051d5] group-hover:text-white text-[#000000] border border-gray-200 group-hover:border-[#0051d5] py-3 px-4 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-between group/btn cursor-pointer shadow-xs group-hover:shadow-md"
                   >
-                    <span>Hire For {service.title.split(' ')[0]}</span>
+                    <span>{service.buttonText || `Hire For ${service.title.split(' ')[0]}`}</span>
                     <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                   </a>
                 </div>
