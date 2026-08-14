@@ -227,7 +227,7 @@ const FALLBACK_BLOG_POSTS: BlogPost[] = [
 ];
 
 function getCleanWpUrl(): string {
-  let url = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://dev-hadwaniravi-portfolio.pantheonsite.io';
+  let url = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://cms.ravihadwani.in';
   url = url.trim();
   url = url.replace(/\/+$/, '');
   url = url.replace(/\/wp-admin$/, '').replace(/\/wp-json$/, '');
@@ -281,6 +281,33 @@ function parseTags(rawTags: any, fallback: string[] = []): string[] {
 export async function getProjects(): Promise<Project[]> {
   const wpUrl = getCleanWpUrl();
 
+  // 1. Try dedicated Plugin REST endpoint for ultra-fast clean payloads
+  try {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/rh-portfolio/v1/projects`, {
+      cache: 'no-store',
+    }, 6000);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          category: item.category || 'WordPress',
+          tags: parseTags(item.tags, ['WordPress', 'React']),
+          image: item.image || FALLBACK_PROJECTS[0].image,
+          challenge: item.challenge || 'Project built with custom architecture.',
+          solution: item.solution || '',
+          liveUrl: item.liveUrl || '#',
+          githubUrl: item.githubUrl || '#',
+          featured: Boolean(item.featured),
+        }));
+      }
+    }
+  } catch (err) {
+    // Continue to standard WP REST fallback
+  }
+
+  // 2. Standard WordPress REST API Fallback
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_project?_embed&per_page=100`, {
       cache: 'no-store',
@@ -293,13 +320,14 @@ export async function getProjects(): Promise<Project[]> {
     return data.map((item: any) => ({
       id: item.id,
       title: item.title.rendered,
-      category: item.meta?.category || 'WordPress',
-      tags: parseTags(item.meta?.tags, ['WordPress', 'React']),
+      category: item.meta?._rh_category || item.meta?.category || 'WordPress',
+      tags: parseTags(item.meta?._rh_tags || item.meta?.tags, ['WordPress', 'React']),
       image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_PROJECTS[0].image,
-      challenge: item.excerpt?.rendered?.replace(/<[^>]+>/g, '').trim() || 'Project built with custom architecture.',
-      solution: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || '',
-      liveUrl: item.meta?.live_url || '#',
-      githubUrl: item.meta?.github_url || '#',
+      challenge: item.meta?._rh_challenge || item.meta?.challenge || item.excerpt?.rendered?.replace(/<[^>]+>/g, '').trim() || 'Project built with custom architecture.',
+      solution: item.meta?._rh_solution || item.meta?.solution || item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || '',
+      liveUrl: item.meta?._rh_live_url || item.meta?.live_url || '#',
+      githubUrl: item.meta?._rh_github_url || item.meta?.github_url || '#',
+      featured: item.meta?._rh_featured === '1',
     }));
   } catch (error) {
     console.error('Error fetching WP projects:', error);
@@ -310,6 +338,28 @@ export async function getProjects(): Promise<Project[]> {
 export async function getServices(): Promise<Service[]> {
   const wpUrl = getCleanWpUrl();
 
+  // 1. Try dedicated Plugin REST endpoint
+  try {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/rh-portfolio/v1/services`, {
+      cache: 'no-store',
+    }, 6000);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          icon: item.icon || 'code',
+          title: item.title,
+          description: item.description || 'High-performance tailored solution engineered with modern web technologies.',
+          tags: parseTags(item.tags, ['Design', 'Development', 'API']),
+        }));
+      }
+    }
+  } catch (err) {
+    // Continue to standard fallback
+  }
+
+  // 2. Standard WordPress REST API Fallback
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_service?_embed&per_page=100`, {
       cache: 'no-store',
@@ -321,10 +371,10 @@ export async function getServices(): Promise<Service[]> {
 
     return data.map((item: any) => ({
       id: item.id,
-      icon: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || item.meta?.icon || 'code',
+      icon: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || item.meta?._rh_service_icon || item.meta?.icon || 'code',
       title: item.title.rendered,
       description: item.content?.rendered?.replace(/<[^>]+>/g, '').trim() || 'High-performance tailored solution engineered with modern web technologies.',
-      tags: parseTags(item.meta?.tags, ['Design', 'Development', 'API']),
+      tags: parseTags(item.meta?._rh_service_tags || item.meta?.tags, ['Design', 'Development', 'API']),
     }));
   } catch (error) {
     console.error('Error fetching WP services:', error);
@@ -332,10 +382,32 @@ export async function getServices(): Promise<Service[]> {
   }
 }
 
-
 export async function getTestimonials(): Promise<Testimonial[]> {
   const wpUrl = getCleanWpUrl();
 
+  // 1. Try dedicated Plugin REST endpoint
+  try {
+    const res = await fetchWithTimeout(`${wpUrl}/wp-json/rh-portfolio/v1/testimonials`, {
+      cache: 'no-store',
+    }, 6000);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          quote: item.quote || '',
+          name: item.name,
+          role: item.role || 'Client',
+          company: item.company || '',
+          avatar: item.avatar || '',
+        }));
+      }
+    }
+  } catch (err) {
+    // Continue to standard fallback
+  }
+
+  // 2. Standard WordPress REST API Fallback
   try {
     const res = await fetchWithTimeout(`${wpUrl}/wp-json/wp/v2/portfolio_testimonial?_embed&per_page=100`, {
       cache: 'no-store',
@@ -349,8 +421,9 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       id: item.id,
       quote: item.content?.rendered?.replace(/<[^>]+>/g, '') || '',
       name: item.title.rendered,
-      role: item.meta?.role || 'Client',
-      company: item.meta?.company || '',
+      role: item.meta?._rh_testimonial_role || item.meta?.role || 'Client',
+      company: item.meta?._rh_testimonial_company || item.meta?.company || '',
+      avatar: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
     }));
   } catch (error) {
     console.error('Error fetching WP testimonials:', error);

@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "cms.ravihadwani.in",
+      },
+      {
+        
+        protocol: "https",
         hostname: "**.pantheonsite.io",
       },
       {
