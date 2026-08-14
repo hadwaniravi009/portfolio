@@ -47,9 +47,14 @@ class RH_Portfolio_Manager {
     }
 
     private function init_hooks() {
+        add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
         add_action( 'init', array( $this, 'enable_cors_headers' ) );
         register_activation_hook( __FILE__, array( $this, 'on_activate' ) );
+    }
+
+    public function load_textdomain() {
+        load_plugin_textdomain( 'rh-portfolio-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
     private function init_modules() {
@@ -61,9 +66,12 @@ class RH_Portfolio_Manager {
 
     public function enqueue_admin_assets( $hook ) {
         global $post_type;
+        $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+        $current_cpt = $screen ? $screen->post_type : ( $post_type ?? '' );
+
         $allowed_cpts = array( 'portfolio_project', 'portfolio_service', 'portfolio_testimonial', 'portfolio_inquiry' );
 
-        if ( in_array( $post_type, $allowed_cpts, true ) || false !== strpos( $hook, 'portfolio' ) ) {
+        if ( in_array( $current_cpt, $allowed_cpts, true ) || false !== strpos( (string) $hook, 'portfolio' ) ) {
             wp_enqueue_media();
             wp_enqueue_style(
                 'rh-portfolio-mgr-css',
