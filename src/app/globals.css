@@ -34,7 +34,7 @@
 /* Background Grid Pattern */
 .grid-bg {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -76,6 +76,7 @@ canvas#ambient-shader {
 .perspective-1000 {
   perspective: 1000px;
 }
+
 .transform-style-3d {
   transform-style: preserve-3d;
 }
@@ -98,9 +99,9 @@ canvas#ambient-shader {
   background: transparent !important;
 }
 
-html, body, * {
+html,
+body,
+* {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
 }
-
-

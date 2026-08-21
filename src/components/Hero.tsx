@@ -113,25 +113,22 @@ and mathematical visual layout.
             <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar max-w-full">
               <button
                 onClick={() => setActiveTab('developer')}
-                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'developer' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
-                }`}
+                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'developer' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
+                  }`}
               >
                 ravi.profile.ts
               </button>
               <button
                 onClick={() => setActiveTab('stack')}
-                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'stack' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
-                }`}
+                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'stack' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
+                  }`}
               >
                 stack.config.json
               </button>
               <button
                 onClick={() => setActiveTab('philosophy')}
-                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'philosophy' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
-                }`}
+                className={`shrink-0 px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-mono whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'philosophy' ? 'bg-[#0051d5] text-white font-bold' : 'text-gray-400 hover:text-white'
+                  }`}
               >
                 philosophy.md
               </button>
