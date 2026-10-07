@@ -58,6 +58,28 @@ class RH_Portfolio_REST_API {
                 'type'         => 'string',
             ) );
         }
+
+        // Rank Math SEO Meta Fields for Blog Posts & Projects
+        $seo_post_types = array( 'post', 'portfolio_project' );
+        foreach ( $seo_post_types as $pt ) {
+            register_rest_field( $pt, 'rank_math_seo', array(
+                'get_callback' => function( $post_arr ) {
+                    $post_id = $post_arr['id'];
+                    $score   = get_post_meta( $post_id, 'rank_math_seo_score', true );
+                    return array(
+                        'score'         => ! empty( $score ) ? intval( $score ) : null,
+                        'focus_keyword' => get_post_meta( $post_id, 'rank_math_focus_keyword', true ) ?: '',
+                        'title'         => get_post_meta( $post_id, 'rank_math_title', true ) ?: '',
+                        'description'   => get_post_meta( $post_id, 'rank_math_description', true ) ?: '',
+                        'canonical_url' => get_post_meta( $post_id, 'rank_math_canonical_url', true ) ?: '',
+                    );
+                },
+                'schema' => array(
+                    'description' => 'Rank Math SEO Meta & Score',
+                    'type'        => 'object',
+                ),
+            ) );
+        }
     }
 
     /**

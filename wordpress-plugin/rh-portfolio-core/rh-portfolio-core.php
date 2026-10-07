@@ -45,6 +45,7 @@ class RH_Portfolio_Core {
     private function __construct() {
         $this->init_hooks();
         $this->init_modules();
+        $this->init_rank_math_compatibility();
     }
 
     private function init_hooks() {
@@ -58,6 +59,29 @@ class RH_Portfolio_Core {
         RH_Portfolio_Meta_Boxes::get_instance();
         RH_Portfolio_REST_API::get_instance();
         RH_Portfolio_Admin_Columns::get_instance();
+    }
+
+    /**
+     * Rank Math SEO Compatibility for Headless CMS Setup
+     */
+    private function init_rank_math_compatibility() {
+        // 1. Tell Rank Math that Next.js frontend has built-in Table of Contents component
+        add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
+            $toc_plugins['headless_nextjs_toc'] = 'Next.js Frontend Table of Contents';
+            return $toc_plugins;
+        } );
+
+        // 2. Enable Rank Math SEO support for Portfolio Projects CPT
+        add_filter( 'rank_math/modules/titles/post_types', function( $post_types ) {
+            $post_types['portfolio_project'] = 'portfolio_project';
+            return $post_types;
+        } );
+        add_filter( 'rank_math/metabox/post_types', function( $post_types ) {
+            if ( is_array( $post_types ) && ! in_array( 'portfolio_project', $post_types, true ) ) {
+                $post_types[] = 'portfolio_project';
+            }
+            return $post_types;
+        } );
     }
 
     public function enqueue_admin_assets( $hook ) {
@@ -83,11 +107,34 @@ class RH_Portfolio_Core {
     }
 
     public function enable_cors_headers() {
+        // Never output CORS headers inside wp-admin to avoid breaking Gutenberg & Rank Math with credentials mode
+        if ( is_admin() ) {
+            return;
+        }
+
         add_action( 'send_headers', function() {
-            header( 'Access-Control-Allow-Origin: *' );
+            if ( is_admin() ) {
+                return;
+            }
+
+            $origin = isset( $_SERVER['HTTP_ORIGIN'] ) ? esc_url_raw( $_SERVER['HTTP_ORIGIN'] ) : '';
+            $allowed_origins = array(
+                'https://ravihadwani.in',
+                'https://www.ravihadwani.in',
+                'http://localhost:3000',
+                'http://localhost:3001',
+            );
+
+            if ( in_array( $origin, $allowed_origins, true ) ) {
+                header( 'Access-Control-Allow-Origin: ' . $origin );
+                header( 'Access-Control-Allow-Credentials: true' );
+            } else {
+                header( 'Access-Control-Allow-Origin: *' );
+            }
+
             header( 'Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS' );
-            header( 'Access-Control-Allow-Credentials: true' );
             header( 'Access-Control-Allow-Headers: Authorization, X-WP-Nonce, Content-Type, Origin, Accept' );
+
             if ( 'OPTIONS' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
                 status_header( 200 );
                 exit();

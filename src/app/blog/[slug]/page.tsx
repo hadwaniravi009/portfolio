@@ -40,6 +40,46 @@ interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: 'Article Not Found | Ravi Hadwani',
+      description: 'The requested blog post could not be located.',
+    };
+  }
+
+  const seoTitle = post.seo?.title || `${post.title} | Ravi Hadwani`;
+  const seoDesc = post.seo?.description || post.excerpt;
+
+  return {
+    title: seoTitle,
+    description: seoDesc,
+    openGraph: {
+      title: seoTitle,
+      description: seoDesc,
+      type: 'article',
+      url: `https://ravihadwani.in/blog/${post.slug}`,
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seoTitle,
+      description: seoDesc,
+      images: [post.image],
+    },
+  };
+}
+
 function processContentAndHeadings(contentHtml: string) {
   const headings: HeadingItem[] = [];
   let headingCount = 0;

@@ -41,6 +41,13 @@ export interface BlogPost {
   readTime: string;
   image: string;
   featured?: boolean;
+  seo?: {
+    score?: number | null;
+    focusKeyword?: string;
+    title?: string;
+    description?: string;
+    canonicalUrl?: string;
+  };
 }
 
 const FALLBACK_PROJECTS: Project[] = [
@@ -449,18 +456,31 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
     if (!Array.isArray(data) || data.length === 0) return FALLBACK_BLOG_POSTS;
 
-    return data.map((item: any, index: number) => ({
-      id: item.id,
-      slug: item.slug,
-      title: item.title.rendered,
-      excerpt: item.excerpt?.rendered?.replace(/<[^>]+>/g, '') || '',
-      content: item.content?.rendered || '',
-      category: item._embedded?.['wp:term']?.[0]?.[0]?.name || 'Engineering',
-      date: new Date(item.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      readTime: `${Math.max(4, Math.ceil((item.content?.rendered?.length || 500) / 1000))} Min Read`,
-      image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_BLOG_POSTS[index % FALLBACK_BLOG_POSTS.length].image,
-      featured: index === 0,
-    }));
+    return data.map((item: any, index: number) => {
+      const rankMath = item.rank_math_seo || {};
+      const rawScore = rankMath.score ?? item.meta?.rank_math_seo_score;
+      const score = rawScore !== undefined && rawScore !== null && rawScore !== '' ? Number(rawScore) : null;
+
+      return {
+        id: item.id,
+        slug: item.slug,
+        title: item.title.rendered,
+        excerpt: item.excerpt?.rendered?.replace(/<[^>]+>/g, '') || '',
+        content: item.content?.rendered || '',
+        category: item._embedded?.['wp:term']?.[0]?.[0]?.name || 'Engineering',
+        date: new Date(item.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+        readTime: `${Math.max(4, Math.ceil((item.content?.rendered?.length || 500) / 1000))} Min Read`,
+        image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || FALLBACK_BLOG_POSTS[index % FALLBACK_BLOG_POSTS.length].image,
+        featured: index === 0,
+        seo: {
+          score,
+          focusKeyword: rankMath.focus_keyword || item.meta?.rank_math_focus_keyword || '',
+          title: rankMath.title || item.meta?.rank_math_title || item.title.rendered,
+          description: rankMath.description || item.meta?.rank_math_description || (item.excerpt?.rendered?.replace(/<[^>]+>/g, '').trim() || ''),
+          canonicalUrl: rankMath.canonical_url || item.meta?.rank_math_canonical_url || '',
+        },
+      };
+    });
   } catch (error) {
     console.error('Error fetching WP blog posts:', error);
     return FALLBACK_BLOG_POSTS;

@@ -9,27 +9,59 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// 1. Enable CORS for Next.js Frontend
+// 1. Enable Safe CORS for Next.js Frontend (Restricted to REST API, never in wp-admin)
 add_action( 'init', function() {
+    if ( is_admin() ) {
+        return;
+    }
+
     add_action( 'send_headers', function() {
-        header( "Access-Control-Allow-Origin: *" );
+        if ( is_admin() ) {
+            return;
+        }
+
+        $origin = isset( $_SERVER['HTTP_ORIGIN'] ) ? esc_url_raw( $_SERVER['HTTP_ORIGIN'] ) : '';
+        $allowed_origins = array(
+            'https://ravihadwani.in',
+            'https://www.ravihadwani.in',
+            'http://localhost:3000',
+            'http://localhost:3001',
+        );
+
+        if ( in_array( $origin, $allowed_origins, true ) ) {
+            header( "Access-Control-Allow-Origin: " . $origin );
+            header( "Access-Control-Allow-Credentials: true" );
+        } else {
+            header( "Access-Control-Allow-Origin: *" );
+        }
+
         header( "Access-Control-Allow-Methods: GET, POST, OPTIONS" );
-        header( "Access-Control-Allow-Credentials: true" );
-        header( "Access-Control-Allow-Headers: Authorization, X-WP-Nonce, Content-Type, Origin" );
-        if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
+        header( "Access-Control-Allow-Headers: Authorization, X-WP-Nonce, Content-Type, Origin, Accept" );
+
+        if ( 'OPTIONS' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
             status_header( 200 );
             exit();
         }
     } );
 } );
 
-// 2. Setup Theme Supports
+// 2. Setup Theme Supports & Rank Math Optimization
 function rh_portfolio_setup() {
     add_theme_support( 'post-thumbnails' );
     add_theme_support( 'title-tag' );
     add_theme_support( 'custom-logo' );
+    add_theme_support( 'align-wide' );
+    add_theme_support( 'responsive-embeds' );
+    add_theme_support( 'editor-styles' );
+    add_theme_support( 'wp-block-styles' );
 }
 add_action( 'after_setup_theme', 'rh_portfolio_setup' );
+
+// 2.1 Rank Math SEO Compatibility for Headless Next.js
+add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
+    $toc_plugins['headless_nextjs_toc'] = 'Next.js Frontend Table of Contents';
+    return $toc_plugins;
+} );
 
 // 3. Register Custom Post Type: Portfolio Projects & Meta
 function rh_register_project_cpt() {
