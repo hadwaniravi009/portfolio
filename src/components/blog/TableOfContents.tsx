@@ -82,13 +82,13 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                 heading.level === 3 ? 'pl-6 text-[11px]' : ''
               } ${
                 isActive
-                  ? 'bg-[#0051d5]/20 text-white font-bold border border-[#0051d5]/40 shadow-sm'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'
+                  ? 'bg-[#0051d5]/25 text-white font-bold border border-[#0051d5]/50 shadow-md'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10 border border-transparent font-medium'
               }`}
             >
               <span
-                className={`mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors ${
-                  isActive ? 'bg-[#0051d5] ring-4 ring-[#0051d5]/20' : 'bg-gray-600 group-hover:bg-gray-400'
+                className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors ${
+                  isActive ? 'bg-[#0051d5] ring-4 ring-[#0051d5]/30' : 'bg-gray-500 group-hover:bg-[#0051d5]'
                 }`}
               />
               <span className="leading-relaxed line-clamp-2">{heading.text}</span>

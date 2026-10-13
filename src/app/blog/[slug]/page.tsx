@@ -84,16 +84,50 @@ function processContentAndHeadings(contentHtml: string) {
   const headings: HeadingItem[] = [];
   let headingCount = 0;
 
-  // Replace h2 and h3 to inject unique ids and collect headings for TOC
+  // Process all headings (h1 through h6) to sanitize light-theme inline colors and ensure high contrast
   const processedHtml = contentHtml.replace(
-    /<(h[23])([^>]*)>(.*?)<\/\1>/gi,
+    /<(h[1-6])([^>]*)>(.*?)<\/\1>/gi,
     (match, tag, attrs, text) => {
-      const level = tag.toLowerCase() === 'h2' ? 2 : 3;
+      const lowerTag = tag.toLowerCase();
+      const level = lowerTag === 'h2' ? 2 : lowerTag === 'h3' ? 3 : lowerTag === 'h1' ? 1 : 4;
       const cleanText = text.replace(/<[^>]+>/g, '').trim();
 
-      const idMatch = attrs.match(/id=["']([^"']+)["']/i);
-      let id = idMatch ? idMatch[1] : '';
+      // Collect H2 and H3 for Table of Contents, ignoring any in-content 'Table of Contents' header
+      if (
+        (lowerTag === 'h2' || lowerTag === 'h3') &&
+        !cleanText.toLowerCase().includes('table of contents')
+      ) {
+        const idMatch = attrs.match(/id=["']([^"']+)["']/i);
+        let id = idMatch ? idMatch[1] : '';
 
+        if (!id) {
+          id =
+            cleanText
+              .toLowerCase()
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-') || `section-${++headingCount}`;
+        }
+
+        headings.push({
+          id,
+          text: cleanText,
+          level,
+        });
+      }
+
+      // Sanitize dark color styles and light-gray borders from inline styles
+      let cleanAttrs = attrs.replace(/style=["']([^"']*)["']/gi, (_m: string, styleContent: string) => {
+        const cleaned = styleContent
+          .replace(/color\s*:\s*(#[0-9a-fA-F]{3,8}|rgb[a]?\([^)]+\))\s*;?/gi, '')
+          .replace(/border-bottom\s*:\s*1px\s+solid\s+(#E2E8F0|#e2e8f0)\s*;?/gi, '')
+          .trim();
+        return cleaned ? `style="${cleaned}"` : '';
+      });
+
+      // Ensure id exists for smooth scroll navigation
+      const idMatch = cleanAttrs.match(/id=["']([^"']+)["']/i);
+      let id = idMatch ? idMatch[1] : '';
       if (!id) {
         id =
           cleanText
@@ -101,19 +135,17 @@ function processContentAndHeadings(contentHtml: string) {
             .replace(/[^\w\s-]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-') || `section-${++headingCount}`;
+        cleanAttrs = ` id="${id}" ${cleanAttrs}`.trim();
       }
 
-      headings.push({
-        id,
-        text: cleanText,
-        level,
-      });
-
-      if (!idMatch) {
-        return `<${tag}${attrs} id="${id}" class="scroll-mt-28">${text}</${tag}>`;
+      // Add scroll-mt-28 class
+      if (/class=["']/i.test(cleanAttrs)) {
+        cleanAttrs = cleanAttrs.replace(/class=["']([^"']*)["']/i, 'class="$1 scroll-mt-28"');
       } else {
-        return `<${tag}${attrs} class="scroll-mt-28">${text}</${tag}>`;
+        cleanAttrs = `${cleanAttrs} class="scroll-mt-28"`.trim();
       }
+
+      return `<${tag} ${cleanAttrs}>${text}</${tag}>`;
     }
   );
 
@@ -293,7 +325,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {/* Formatted HTML Content */}
                 <div className="prose prose-invert prose-blue max-w-none text-gray-300 text-base sm:text-lg leading-relaxed space-y-6">
                   <div
-                    className="space-y-6 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-extrabold [&_h2]:text-white [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:pt-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_p]:leading-relaxed [&_p]:text-gray-300 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:text-gray-300 [&_code]:text-[#b4c5ff] [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
+                    className="blog-content-body space-y-6 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-extrabold [&_h2]:!text-white [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:pt-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:!text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_h4]:!text-white [&_p]:leading-relaxed [&_p]:text-gray-300 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:text-gray-300 [&_code]:text-[#b4c5ff] [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
                     dangerouslySetInnerHTML={{ __html: processedHtml }}
                   />
 
