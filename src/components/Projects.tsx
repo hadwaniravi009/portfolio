@@ -169,7 +169,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 inline-block" />
                 <div className="hidden sm:flex items-center gap-2 bg-[#0d1117] text-gray-400 text-xs font-mono px-4 py-1 rounded-full ml-4 border border-gray-800">
                   <Globe className="w-3 h-3 text-[#316bf3]" />
-                  <span>https://hadwaniravi.vercel.app/case-study/{activeModalProject.id}</span>
+                  <span>https://ravihadwani.in/case-study/{activeModalProject.id}</span>
                 </div>
               </div>
 

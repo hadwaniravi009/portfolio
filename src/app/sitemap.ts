@@ -4,7 +4,7 @@ import { getBlogPosts } from '@/lib/wordpress';
 export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://hadwaniravi.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ravihadwani.in';
 
   // Fetch dynamic blog posts from WordPress
   let posts: Array<{ slug: string }> = [];

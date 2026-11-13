@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,7 +16,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://hadwaniravi.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ravihadwani.in'),
   title: {
     default: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
     template: '%s | Ravi Hadwani',
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     'Bespoke Web Design',
     'Web Architecture',
   ],
-  authors: [{ name: 'Ravi Hadwani', url: 'https://hadwaniravi.vercel.app' }],
+  authors: [{ name: 'Ravi Hadwani', url: 'https://ravihadwani.in' }],
   creator: 'Ravi Hadwani',
   publisher: 'Ravi Hadwani',
   formatDetection: {
@@ -41,14 +42,14 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: 'https://hadwaniravi.vercel.app',
+    canonical: 'https://ravihadwani.in',
   },
   openGraph: {
     title: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
     description:
       'Transforming complex business requirements into fast, scalable, and conversion-optimized web applications with Swiss layout precision.',
     type: 'website',
-    url: 'https://hadwaniravi.vercel.app',
+    url: 'https://ravihadwani.in',
     siteName: 'Ravi Hadwani Portfolio',
     locale: 'en_US',
     images: [
@@ -78,6 +79,13 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
@@ -90,7 +98,7 @@ export default function RootLayout({
     '@type': 'Person',
     name: 'Ravi Hadwani',
     jobTitle: 'Senior Frontend Developer & UI/UX Designer',
-    url: 'https://hadwaniravi.vercel.app',
+    url: 'https://ravihadwani.in',
     email: 'hadwaniravi009@gmail.com',
     address: {
       '@type': 'PostalAddress',
@@ -124,6 +132,7 @@ export default function RootLayout({
         className={`${inter.variable} antialiased bg-[#f8f9fb] text-[#191c1e]`}
         suppressHydrationWarning
       >
+        <GoogleAnalytics />
         {children}
       </body>
     </html>
