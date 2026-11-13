@@ -3,7 +3,7 @@
  * Plugin Name:       RH Portfolio Manager
  * Plugin URI:        https://ravihadwani.in
  * Description:       Dedicated Headless CMS Manager for Ravi Hadwani Portfolio. Provides full CRUD administration for Projects, Services, Testimonials, Inquiries, and ultra-fast REST API endpoints.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            Ravi Hadwani
  * Author URI:        https://ravihadwani.in
  * Text Domain:       rh-portfolio-manager
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-define( 'RH_PORTFOLIO_MGR_VERSION', '1.1.0' );
+define( 'RH_PORTFOLIO_MGR_VERSION', '1.2.0' );
 define( 'RH_PORTFOLIO_MGR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'RH_PORTFOLIO_MGR_URL', plugin_dir_url( __FILE__ ) );
 
@@ -26,6 +26,7 @@ require_once RH_PORTFOLIO_MGR_PATH . 'includes/class-cpt-manager.php';
 require_once RH_PORTFOLIO_MGR_PATH . 'includes/class-meta-boxes.php';
 require_once RH_PORTFOLIO_MGR_PATH . 'includes/class-rest-api.php';
 require_once RH_PORTFOLIO_MGR_PATH . 'includes/class-admin-columns.php';
+require_once RH_PORTFOLIO_MGR_PATH . 'includes/class-analytics-widget.php';
 
 /**
  * Main Plugin Initialization Class
@@ -63,6 +64,7 @@ class RH_Portfolio_Manager {
         RH_Portfolio_Meta_Boxes::get_instance();
         RH_Portfolio_REST_API::get_instance();
         RH_Portfolio_Admin_Columns::get_instance();
+        RH_Portfolio_Analytics_Widget::get_instance();
     }
 
     /**
