@@ -136,3 +136,4 @@ class RH_Portfolio_Analytics_Widget {
         }
     }
 }
+

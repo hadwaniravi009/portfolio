@@ -23,6 +23,35 @@ class RH_Portfolio_REST_API {
     private function __construct() {
         add_action( 'rest_api_init', array( $this, 'register_rest_fields' ) );
         add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+        add_filter( 'the_content', array( $this, 'sanitize_dark_colors_in_content' ), 99 );
+        add_filter( 'rest_prepare_post', array( $this, 'sanitize_post_rest_content' ), 99, 3 );
+    }
+
+    /**
+     * Sanitize dark hardcoded Gutenberg colors for Headless Dark Theme
+     */
+    public function sanitize_dark_colors_in_content( $content ) {
+        if ( ! is_string( $content ) ) {
+            return $content;
+        }
+
+        // Sanitize dark colors from inline styles
+        $content = preg_replace( '/color\s*:\s*#(?:0[0-9a-fA-F]{5}|1[0-9a-fA-F]{5}|2[0-9a-fA-F]{5}|3[0-9a-fA-F]{5}|4[0-9a-fA-F]{5}|0f172a|1e293b|334155|475569)\s*;?/i', 'color: #f1f5f9;', $content );
+
+        // Convert light background boxes to sleek dark cards
+        $content = preg_replace( '/background\s*:\s*#(?:F8FAFC|f8fafc|EEF2F6|eef2f6|ffffff|FFFFFF)\s*;?/i', 'background: rgba(255, 255, 255, 0.04);', $content );
+
+        // Convert light borders
+        $content = preg_replace( '/border(?:-color)?\s*:\s*(?:1px\s+solid\s+)?#(?:E2E8F0|e2e8f0)\s*;?/i', 'border: 1px solid rgba(255, 255, 255, 0.1);', $content );
+
+        return $content;
+    }
+
+    public function sanitize_post_rest_content( $response, $post, $request ) {
+        if ( isset( $response->data['content']['rendered'] ) ) {
+            $response->data['content']['rendered'] = $this->sanitize_dark_colors_in_content( $response->data['content']['rendered'] );
+        }
+        return $response;
     }
 
     /**

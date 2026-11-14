@@ -85,8 +85,8 @@ function processContentAndHeadings(contentHtml: string) {
   let headingCount = 0;
 
   // Process all headings (h1 through h6) to sanitize light-theme inline colors and ensure high contrast
-  const processedHtml = contentHtml.replace(
-    /<(h[1-6])([^>]*)>(.*?)<\/\1>/gi,
+  let processedHtml = contentHtml.replace(
+    /<(h[1-6])([^>]*)>([\s\S]*?)<\/\1>/gi,
     (match, tag, attrs, text) => {
       const lowerTag = tag.toLowerCase();
       const level = lowerTag === 'h2' ? 2 : lowerTag === 'h3' ? 3 : lowerTag === 'h1' ? 1 : 4;
@@ -119,8 +119,8 @@ function processContentAndHeadings(contentHtml: string) {
       // Sanitize dark color styles and light-gray borders from inline styles
       let cleanAttrs = attrs.replace(/style=["']([^"']*)["']/gi, (_m: string, styleContent: string) => {
         const cleaned = styleContent
-          .replace(/color\s*:\s*(#[0-9a-fA-F]{3,8}|rgb[a]?\([^)]+\))\s*;?/gi, '')
-          .replace(/border-bottom\s*:\s*1px\s+solid\s+(#E2E8F0|#e2e8f0)\s*;?/gi, '')
+          .replace(/color\s*:\s*[^;]+;?/gi, '')
+          .replace(/border-bottom\s*:\s*1px\s+solid\s+(#E2E8F0|#e2e8f0)\s*;?/gi, 'border-bottom: 1px solid rgba(255, 255, 255, 0.12);')
           .trim();
         return cleaned ? `style="${cleaned}"` : '';
       });
@@ -138,15 +138,33 @@ function processContentAndHeadings(contentHtml: string) {
         cleanAttrs = ` id="${id}" ${cleanAttrs}`.trim();
       }
 
-      // Add scroll-mt-28 class
+      // Add scroll-mt-28 and high-contrast text color classes
       if (/class=["']/i.test(cleanAttrs)) {
-        cleanAttrs = cleanAttrs.replace(/class=["']([^"']*)["']/i, 'class="$1 scroll-mt-28"');
+        cleanAttrs = cleanAttrs.replace(/class=["']([^"']*)["']/i, 'class="$1 scroll-mt-28 !text-white"');
       } else {
-        cleanAttrs = `${cleanAttrs} class="scroll-mt-28"`.trim();
+        cleanAttrs = `${cleanAttrs} class="scroll-mt-28 !text-white"`.trim();
       }
 
       return `<${tag} ${cleanAttrs}>${text}</${tag}>`;
     }
+  );
+
+  // Globally sanitize dark text colors across all elements (p, span, div, h3, h4)
+  processedHtml = processedHtml.replace(
+    /color\s*:\s*(#0[0-9a-fA-F]{5}|#1[0-9a-fA-F]{5}|#2[0-9a-fA-F]{5}|#3[0-9a-fA-F]{5}|#4[0-9a-fA-F]{5}|#0f172a|#1e293b|#334155|#475569|#0F172A)\s*;?/gi,
+    'color: #f1f5f9;'
+  );
+
+  // Sanitize light backgrounds (FAQ boxes, callouts) into modern dark glass cards
+  processedHtml = processedHtml.replace(
+    /background\s*:\s*(#F8FAFC|#f8fafc|#EEF2F6|#eef2f6|#ffffff|#FFFFFF)\s*;?/gi,
+    'background: rgba(255, 255, 255, 0.04);'
+  );
+
+  // Sanitize light borders
+  processedHtml = processedHtml.replace(
+    /border(?:-color)?\s*:\s*(?:1px\s+solid\s+)?(#E2E8F0|#e2e8f0)\s*;?/gi,
+    'border: 1px solid rgba(255, 255, 255, 0.1);'
   );
 
   return {

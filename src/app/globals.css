@@ -97,9 +97,41 @@ canvas#ambient-shader {
 .blog-content-body h3,
 .blog-content-body h4,
 .blog-content-body h5,
-.blog-content-body h6 {
+.blog-content-body h6,
+.blog-content-body h1[style],
+.blog-content-body h2[style],
+.blog-content-body h3[style],
+.blog-content-body h4[style] {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
   text-wrap: balance;
+}
+
+/* Force light colors on any elements with dark inline styles */
+.blog-content-body [style*="color: #0f172a"],
+.blog-content-body [style*="color:#0f172a"],
+.blog-content-body [style*="color: #0F172A"],
+.blog-content-body [style*="color: #1e293b"],
+.blog-content-body [style*="color:#1e293b"],
+.blog-content-body [style*="color: #334155"],
+.blog-content-body [style*="color:#334155"],
+.blog-content-body [style*="color: #475569"],
+.blog-content-body [style*="color:#475569"] {
+  color: #f1f5f9 !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+}
+
+/* FAQ cards & Callouts with light background transformed to dark glass cards */
+.blog-content-body div[style*="background: #F8FAFC"],
+.blog-content-body div[style*="background:#F8FAFC"],
+.blog-content-body div[style*="background: #f8fafc"],
+.blog-content-body div[style*="background:#f8fafc"],
+.blog-content-body div[style*="background: #EEF2F6"],
+.blog-content-body div[style*="background:#EEF2F6"],
+.blog-content-body div[style*="background: #ffffff"],
+.blog-content-body div[style*="background:#ffffff"] {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .blog-content-body h1 {
