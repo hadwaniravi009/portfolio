@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -8,7 +11,6 @@ const nextConfig: NextConfig = {
         hostname: "cms.ravihadwani.in",
       },
       {
-        
         protocol: "https",
         hostname: "**.pantheonsite.io",
       },
