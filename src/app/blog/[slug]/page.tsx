@@ -438,6 +438,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
 
+              {/* High-Converting Client Inbound CTA Banner */}
+              <div className="my-10 p-7 sm:p-10 rounded-3xl bg-gradient-to-br from-[#0051d5]/25 via-[#0051d5]/10 to-transparent border border-[#0051d5]/40 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#0051d5]/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20 group-hover:scale-125 transition-transform duration-700" />
+                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                  <div className="space-y-2.5 max-w-xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0051d5]/30 border border-[#0051d5]/50 text-white text-[10px] font-extrabold uppercase tracking-widest">
+                      <Sparkles className="w-3 h-3 text-cyan-300" />
+                      <span>Work With Ravi Hadwani</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                      Need a high-performance Next.js or Headless WordPress web app?
+                    </h3>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      I engineer bespoke, sub-second web platforms tailored for business conversion and top Google rankings. Let's discuss your project scope and timelines.
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full sm:w-auto">
+                    <Link
+                      href="/#contact"
+                      className="px-6 py-3.5 rounded-xl bg-white text-black hover:bg-[#0051d5] hover:text-white font-bold text-xs uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2 text-center group/btn"
+                    >
+                      <span>Start a Project</span>
+                      <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </Link>
+                    <a
+                      href="mailto:hadwaniravi009@gmail.com"
+                      className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/15 text-xs font-semibold tracking-wider transition-all text-center"
+                    >
+                      Direct Email Inquiry
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               {/* Author Bio Box */}
               <AuthorBio />
 

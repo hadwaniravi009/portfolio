@@ -59,10 +59,10 @@ and mathematical visual layout.
 
       <div className="px-4 sm:px-6 md:px-16 max-w-[1440px] mx-auto text-center z-10 w-full">
         {/* Availability Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 border border-[#0051d5]/20 rounded-full mb-6 sm:mb-8 bg-white/80 backdrop-blur-md shadow-sm max-w-full">
+        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 border border-emerald-500/30 rounded-full mb-6 sm:mb-8 bg-emerald-500/5 backdrop-blur-md shadow-sm max-w-full">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
-          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-[#0051d5] truncate">
-            Handcrafted Web Architecture & Design
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-emerald-700 truncate">
+            Available For High-Impact Projects • Sub-1s Speed & SEO Guarantee
           </span>
         </div>
 
@@ -70,29 +70,29 @@ and mathematical visual layout.
         <h1 className="text-3xl xs:text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#000000] mb-4 sm:mb-6 max-w-5xl mx-auto leading-[1.12] sm:leading-[1.08] break-words">
           Hi, I'm <span className="underline decoration-[#0051d5] decoration-wavy decoration-2 underline-offset-4 sm:underline-offset-8">Ravi Hadwani</span>.{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#000000] via-[#0051d5] to-[#316bf3]">
-            I build fast web applications & custom WordPress platforms.
+            I build high-converting Next.js & Headless WordPress platforms.
           </span>
         </h1>
 
         {/* Subtitle with Personal Voice */}
         <p className="text-base sm:text-lg md:text-xl text-[#444748] max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal px-2 sm:px-0">
-          No generic AI templates or bloated themes. I engineer bespoke Next.js 16 frontends and Headless WordPress systems crafted for speed, SEO ranking, and genuine client conversion.
+          Helping founders, agencies, and ambitious brands turn complex UI/UX designs into scalable, pixel-perfect web applications with sub-second speeds, top Google search rankings, and measurable business growth.
         </p>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 sm:mb-16 w-full max-w-md sm:max-w-none mx-auto">
           <a
-            href="#projects"
+            href="#contact"
             className="w-full sm:w-auto bg-[#000000] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-[#0051d5] transition-all flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl active:scale-95 group cursor-pointer"
           >
-            <span>Explore Handcrafted Projects</span>
+            <span>Start a Project / Get Quote</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
-            href="#contact"
+            href="#projects"
             className="w-full sm:w-auto bg-white border border-[#c4c7c7] text-[#000000] px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:border-[#0051d5] hover:text-[#0051d5] transition-all active:scale-95 text-center shadow-sm cursor-pointer"
           >
-            Start a Custom Project
+            View Client Case Studies
           </a>
         </div>
 

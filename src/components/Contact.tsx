@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { sendContactMessage } from '@/lib/wordpress';
-import { Mail, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle, AlertCircle, Loader2, Clock, ShieldCheck, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -45,17 +45,18 @@ export default function Contact() {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         {/* Left Column Info */}
         <div className="lg:col-span-5">
-          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-[#0051d5] mb-2 block">
-            Get In Touch
-          </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-3">
+            <Clock className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Fast Response Within 2 Hours</span>
+          </div>
           <h2 className="text-2xl xs:text-3xl md:text-5xl font-extrabold tracking-tight text-[#000000] mb-4 sm:mb-6 leading-tight">
-            Let's build your next digital masterpiece.
+            Let's build your next high-converting product.
           </h2>
           <p className="text-base sm:text-lg text-[#444748] mb-8 sm:mb-10 leading-relaxed font-normal">
-            Have a project in mind or need assistance with frontend development, UI design, or headless WordPress architecture? Reach out and let's talk.
+            Whether you need a bespoke Next.js web application, a headless WordPress platform, or a modern UI/UX redesign, reach out today for a free technical consultation and transparent milestone quote.
           </p>
 
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6 mb-8">
             <div className="flex items-center gap-3 sm:gap-4 group">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#f2f4f6] flex items-center justify-center text-[#0051d5] group-hover:bg-[#0051d5] group-hover:text-white transition-colors shrink-0">
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -73,9 +74,21 @@ export default function Contact() {
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div>
-                <p className="text-[10px] sm:text-xs uppercase font-bold tracking-widest text-gray-400">Location</p>
-                <p className="text-base sm:text-lg font-bold text-[#000000]">India</p>
+                <p className="text-[10px] sm:text-xs uppercase font-bold tracking-widest text-gray-400">Location & Timezone</p>
+                <p className="text-base sm:text-lg font-bold text-[#000000]">India (IST) • Serving Clients Globally</p>
               </div>
+            </div>
+          </div>
+
+          {/* Client Assurance Badges */}
+          <div className="p-4 rounded-2xl bg-[#f8f9fb] border border-[#c4c7c7]/30 space-y-2 text-xs text-[#444748]">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#0051d5] shrink-0" />
+              <span className="font-semibold text-gray-800">100% Code Ownership & Clean Git Repository Handover</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#0051d5] shrink-0" />
+              <span className="font-semibold text-gray-800">Fixed Milestone Pricing with Zero Hidden Charges</span>
             </div>
           </div>
         </div>

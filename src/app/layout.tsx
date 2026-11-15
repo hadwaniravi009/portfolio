@@ -18,20 +18,23 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ravihadwani.in'),
   title: {
-    default: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
+    default: 'Ravi Hadwani | Senior Next.js Developer & Headless WordPress Architect',
     template: '%s | Ravi Hadwani',
   },
   description:
-    'Bespoke personal portfolio of Ravi Hadwani, specializing in Next.js 16, React 19, TypeScript, Swiss UI/UX design systems, and Headless WordPress web architecture.',
+    'Senior Full-Stack Frontend Engineer & UI/UX Designer specializing in Next.js 16, React 19, and Headless WordPress architectures. Engineering lightning-fast, high-converting digital products for founders & enterprises.',
   keywords: [
     'Ravi Hadwani',
-    'Senior Frontend Developer',
-    'UI/UX Designer India',
-    'Next.js 16 Developer',
-    'Headless WordPress Specialist',
-    'React Full-Stack Engineer',
-    'Bespoke Web Design',
-    'Web Architecture',
+    'Hire Next.js Developer',
+    'Freelance Next.js Specialist',
+    'Headless WordPress Developer India',
+    'Senior Frontend Engineer India',
+    'React Full-Stack Architect',
+    'Figma to Next.js Developer',
+    'High-Converting Web Design',
+    'Core Web Vitals Optimization',
+    'UI/UX Design Systems',
+    'Bespoke Web Development',
   ],
   authors: [{ name: 'Ravi Hadwani', url: 'https://ravihadwani.in' }],
   creator: 'Ravi Hadwani',
@@ -45,9 +48,9 @@ export const metadata: Metadata = {
     canonical: 'https://ravihadwani.in',
   },
   openGraph: {
-    title: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
+    title: 'Ravi Hadwani | Senior Next.js Developer & Headless WordPress Architect',
     description:
-      'Transforming complex business requirements into fast, scalable, and conversion-optimized web applications with Swiss layout precision.',
+      'Engineering blazing-fast, conversion-optimized Next.js and Headless WordPress platforms that scale with your business and achieve 95+ PageSpeed scores.',
     type: 'website',
     url: 'https://ravihadwani.in',
     siteName: 'Ravi Hadwani Portfolio',
@@ -63,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ravi Hadwani | Senior Frontend Developer & UI/UX Designer',
-    description: 'Bespoke Next.js 16 & Headless WordPress Web Architecture.',
+    title: 'Ravi Hadwani | Senior Next.js Developer & Headless WordPress Architect',
+    description: 'Bespoke Next.js 16 & Headless WordPress Web Architecture for founders and businesses.',
     creator: '@hadwaniravi',
     images: ['https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&h=630&q=80'],
   },
@@ -95,24 +98,69 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Ravi Hadwani',
-    jobTitle: 'Senior Frontend Developer & UI/UX Designer',
-    url: 'https://ravihadwani.in',
-    email: 'hadwaniravi009@gmail.com',
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'India',
-    },
-    sameAs: ['https://github.com/hadwaniravi009', 'https://linkedin.com'],
-    knowsAbout: [
-      'Next.js 16',
-      'React 19',
-      'TypeScript',
-      'Headless WordPress',
-      'UI/UX Design Systems',
-      'REST API',
-      'Tailwind CSS',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': 'https://ravihadwani.in/#person',
+        name: 'Ravi Hadwani',
+        jobTitle: 'Senior Frontend Developer & Headless WordPress Architect',
+        url: 'https://ravihadwani.in',
+        email: 'hadwaniravi009@gmail.com',
+        image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&h=630&q=80',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'India',
+        },
+        sameAs: ['https://github.com/hadwaniravi009', 'https://linkedin.com'],
+        knowsAbout: [
+          'Next.js 16',
+          'React 19',
+          'TypeScript',
+          'Headless WordPress',
+          'UI/UX Design Systems',
+          'REST API',
+          'Tailwind CSS',
+          'Core Web Vitals Optimization',
+        ],
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': 'https://ravihadwani.in/#service',
+        name: 'Ravi Hadwani — Web Architecture & Frontend Engineering',
+        url: 'https://ravihadwani.in',
+        description: 'Bespoke Next.js development, Headless WordPress architecture, and high-converting UI/UX design systems.',
+        provider: {
+          '@id': 'https://ravihadwani.in/#person',
+        },
+        areaServed: 'Worldwide',
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Core Services',
+          itemListElement: [
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Next.js Web Application Development',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Headless WordPress CMS Engineering',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'UI/UX Design System & Prototyping',
+              },
+            },
+          ],
+        },
+      },
     ],
   };
 

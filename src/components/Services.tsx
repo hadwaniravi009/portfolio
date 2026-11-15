@@ -48,24 +48,24 @@ export default function Services({ services }: ServicesProps) {
 
   const getDeliverables = (title: string, tags: string[], description: string) => {
     const lower = title.toLowerCase();
-    if (lower.includes('design') || lower.includes('ui') || lower.includes('graphic')) {
+    if (lower.includes('design') || lower.includes('ui') || lower.includes('ux') || lower.includes('graphic')) {
       return [
-        'Swiss Grid Hierarchy & Figma Prototypes',
-        'Conversion-Focused User Journey Mapping',
-        'Bespoke Visual Tokens & Typography System',
+        'Pixel-Perfect Figma to Production Code Architecture',
+        'High-Converting User Journeys & Frictionless UX Flows',
+        'Scalable Design System with Tailwind & Token Specifications',
       ];
     }
     if (lower.includes('web') || lower.includes('dev') || lower.includes('custom') || lower.includes('frontend')) {
       return [
-        'Next.js 16 App Router & SSR Architecture',
-        'Sub-1.2s Page Speed & Clean Component Code',
-        '100% Mobile & Desktop Responsive Testing',
+        'Next.js 16 App Router with Sub-Second Server Rendering',
+        'Guaranteed 95+ PageSpeed & Google Core Web Vitals',
+        'Enterprise Type-Safe React Code with Zero Technical Debt',
       ];
     }
     return [
-      'Decoupled Headless WP REST / GraphQL Setup',
-      'Custom CPTs, Meta Fields & Security Hardening',
-      'High-Speed Next.js Frontend Integration',
+      'Decoupled Headless WordPress with Blazing-Fast Next.js UI',
+      'Custom CMS Panels Tailored for Non-Technical Marketing Teams',
+      'Enterprise REST API Caching, CDN & Zero-Downtime Deployment',
     ];
   };
 

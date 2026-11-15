@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getBlogPosts } from '@/lib/wordpress';
 import CustomCursor from '@/components/CustomCursor';
 import Navbar from '@/components/Navbar';
@@ -8,6 +9,22 @@ import { ArrowRight, ArrowUpRight, Mail, ChevronLeft, ChevronRight, Search, Spar
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Blog & Technical Insights | Ravi Hadwani',
+  description:
+    'Engineering insights on Next.js 16, Headless WordPress architectures, Core Web Vitals optimization, and high-converting UI/UX design systems.',
+  alternates: {
+    canonical: 'https://ravihadwani.in/blog',
+  },
+  openGraph: {
+    title: 'Blog & Technical Insights | Ravi Hadwani',
+    description:
+      'Engineering insights on Next.js 16, Headless WordPress architectures, Core Web Vitals optimization, and high-converting UI/UX design systems.',
+    url: 'https://ravihadwani.in/blog',
+    type: 'website',
+  },
+};
 
 interface BlogPageProps {
   searchParams?: Promise<{ search?: string; category?: string }>;
