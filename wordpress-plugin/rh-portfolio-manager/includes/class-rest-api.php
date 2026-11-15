@@ -44,6 +44,19 @@ class RH_Portfolio_REST_API {
         // Convert light borders
         $content = preg_replace( '/border(?:-color)?\s*:\s*(?:1px\s+solid\s+)?#(?:E2E8F0|e2e8f0)\s*;?/i', 'border: 1px solid rgba(255, 255, 255, 0.1);', $content );
 
+        // Clean broken JSON-LD scripts where wpautop injected <br /> or <p> tags
+        $content = preg_replace_callback( '/<script\b[^>]*type=["\']application\/ld\+json["\'][^>]*>([\s\S]*?)<\/script>/i', function( $matches ) {
+            $raw_json = $matches[1];
+            $clean_json = preg_replace( '/<br\s*\/?>/i', '', $raw_json );
+            $clean_json = preg_replace( '/<\/?p>/i', '', $clean_json );
+            $clean_json = html_entity_decode( $clean_json, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+            $decoded = json_decode( trim( $clean_json ), true );
+            if ( json_last_error() === JSON_ERROR_NONE && ! empty( $decoded ) ) {
+                return '<script type="application/ld+json">' . wp_json_encode( $decoded ) . '</script>';
+            }
+            return '';
+        }, $content );
+
         return $content;
     }
 

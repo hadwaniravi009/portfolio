@@ -167,6 +167,23 @@ function processContentAndHeadings(contentHtml: string) {
     'border: 1px solid rgba(255, 255, 255, 0.1);'
   );
 
+  // Clean broken JSON-LD scripts in content (WordPress wpautop adds <br /> inside script tags causing GSC syntax errors)
+  processedHtml = processedHtml.replace(
+    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    (match, jsonContent) => {
+      try {
+        const cleanedJson = jsonContent
+          .replace(/<br\s*\/?>/gi, '')
+          .replace(/<\/?p>/gi, '')
+          .trim();
+        const parsed = JSON.parse(cleanedJson);
+        return `<script type="application/ld+json">${JSON.stringify(parsed)}</script>`;
+      } catch {
+        return '';
+      }
+    }
+  );
+
   return {
     processedHtml,
     headings,
@@ -216,8 +233,36 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const recentPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
   const recommendedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 2);
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image ? [post.image] : [],
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: 'Ravi Hadwani',
+      url: 'https://ravihadwani.in',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Ravi Hadwani',
+      url: 'https://ravihadwani.in',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://ravihadwani.in/blog/${post.slug}`,
+    },
+  };
+
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#e2e2e2] selection:bg-[#0051d5] selection:text-white overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <ReadingProgressBar />
       <CustomCursor />
       <Navbar />
